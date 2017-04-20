@@ -1,6 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 #include <string>
+#include <vector>
+
+class Edge;
 
 class Node
 {
@@ -10,6 +13,7 @@ class Node
     std::string m_country;
     float m_latitude;
     float m_longitude;
+    std::vector<Edge *> m_incoming, m_outgoing;
 
 
 public:
@@ -19,6 +23,8 @@ public:
     std::string country() { return m_country; }
     float latitude() { return m_latitude; }
     float longitude() { return m_longitude; }
+    std::vector<Edge> incoming();
+    std::vector<Edge> outgoing();
 
     Node(short id,
          std::string city,
