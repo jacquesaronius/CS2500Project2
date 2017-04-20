@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <vector>
+#include <map>
 #include "node.h"
 #include "edge.h"
 
