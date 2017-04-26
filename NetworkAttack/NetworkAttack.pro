@@ -6,7 +6,9 @@ CONFIG += c++11
 SOURCES += main.cpp \
     node.cpp \
     edge.cpp \
-    parser.cpp
+    parser.cpp \
+    controller.cpp \
+    path.cpp
 
 RESOURCES += qml.qrc
 
@@ -35,4 +37,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     node.h \
     edge.h \
-    parser.h
+    parser.h \
+    controller.h \
+    path.h
