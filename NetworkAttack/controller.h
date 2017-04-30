@@ -11,6 +11,10 @@ class Controller : public QObject
     Parser * parser;
 public:
     explicit Controller(QObject *parent = 0);
+    int maxFlow(int graph[m_nodes.size()][m_nodes.size()], Node* s, Node *t);
+    int ** Calculategraph();
+    path AugmentingPath(int Graph[m_nodes.size()][m_nodes.size()], Node* s, Node* t);
+    bool bfs(int rGraph[m_nodes.size()][m_nodes.size()], Node* s, Node* t);
 
 signals:
 
