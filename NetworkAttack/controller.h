@@ -11,6 +11,7 @@ class Controller : public QObject
     Parser * parser;
 public:
     explicit Controller(QObject *parent = 0);
+    int test_parser();
 
 signals:
 
