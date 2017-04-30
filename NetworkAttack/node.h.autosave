@@ -27,7 +27,7 @@ public:
     std::vector<Edge> incoming();
     std::vector<Edge> outgoing();
     bool visited() const { return m_visited; }
-    void visited(const bool visited) { m_visited = visited; }
+    void visited(const bool visited) { m_visited = visited; }   a
 
     Node(short id,
          std::string city,
