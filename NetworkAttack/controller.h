@@ -17,6 +17,9 @@ public:
     int ** Calculategraph();
     Path AugmentingPath(int **, Node* s, Node* t);
     bool bfs(int **, Node* s, Node* t);
+    void react_attack(vector<path> &paths);
+    void static_attack(vector<path> &paths);
+    void Controller::base_attack(vector<Edges> &edges);
 
 signals:
 

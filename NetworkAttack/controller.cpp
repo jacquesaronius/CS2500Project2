@@ -102,3 +102,43 @@ bool Controller::bfs(int **, Node* s, Node* t)
 
      return (visited[t] == true);
 }
+
+void Controller::react_attack(vector<path> &paths) {
+    short rounds = 1;
+    short flow = check_flow();
+    for (auto i = 0; i < paths.size(); i++) {
+        paths[i][1].is_alive(0);
+        flow = flow - edge_capacity;
+        update_report_data(); // need params still
+        rounds ++;
+        flow = max_flow(); // check fnct name, calls max flow algo
+        if (flow <= 0)
+            i = paths.size();
+    }   // end for
+}   // end attack
+
+void Controller::static_attack(vector<path> &paths) {
+    short rounds = 1;
+    short flow = check_flow();
+    for (auto i = 0; i < random_paths.size(); i++) {
+        paths[i][1].is_alive(0);
+        flow = flow - edge_capacity;
+        update_report_data(); // need params still
+        rounds ++;
+        if (flow <= 0)
+            i = random_paths.size();
+    }   // end for
+}   // end attack
+
+void Controller::base_attack(vector<Edges> &edges) {
+    short rounds = 1;
+    short flow = check_flow();
+    for (auto i = 0; i < edges.size(); i++) {
+        edges[i].is_alive(0);
+        flow = flow - edge_capacity;
+        update_report_data(); // need params still
+        rounds ++;
+        if (flow <= 0)
+            i = paths.size();
+    }   // end for
+}   // end attack
