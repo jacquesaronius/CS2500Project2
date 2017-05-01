@@ -35,7 +35,7 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
     Node* v;
-
+    std::vector<Path> graphpaths;
     int ** rGraph=0;
 
     for (unsigned int i = 0; i < parser->nodes().size(); i++)
@@ -54,6 +54,7 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
         int path_flow = 20;
 
         Path P=AugmentingPath(rGraph, s, t);
+        addpath(P);
 
         for (v=t; v != s; v=v->parent())
         {
@@ -70,6 +71,7 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
 {
     Path Apath;
+    bool cancontinue;
     Node * u;
     Node * v;
     int path_flow = 20;
@@ -79,7 +81,28 @@ Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
         if(path_flow>graph[u->id()][v->id()])
             path_flow = graph[u->id()][v->id()];
     }
-
+    v=t;
+    int i=0;
+    while(v!=s && cancontinue==true)
+    {
+        if(v!=s)
+        {
+          if(v->incoming()[i].source().id()==v->parent()->id())
+          {
+              Apath.add_edge(v->incoming()[i]);
+              v=v->parent();
+              i=0;
+          }
+          else
+          {
+              i++;
+          }
+        }
+        if(v==s)
+        {
+            cancontinue=false;
+        }
+    }
     Apath.flow(path_flow);
     return Apath;
 }
@@ -111,4 +134,9 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
      }
 
      return (t->visited() == true);
+}
+
+void Controller::addpath(Path path)
+{
+    paths.push_back(path);
 }
