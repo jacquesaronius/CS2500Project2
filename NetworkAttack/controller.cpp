@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <vector>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {

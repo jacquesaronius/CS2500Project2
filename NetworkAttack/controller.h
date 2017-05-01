@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <vector>
 #include "parser.h"
 #include "path.h"
 
