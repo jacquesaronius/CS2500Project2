@@ -103,7 +103,7 @@ bool Controller::bfs(int **, Node* s, Node* t)
      return (visited[t] == true);
 }
 
-void Controller::react_attack(vector<path> &paths) {
+void Controller::react_attack(vector<path> &paths, Node *s, Node *t) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {
@@ -111,7 +111,7 @@ void Controller::react_attack(vector<path> &paths) {
         flow = flow - edge_capacity;
         update_report_data(); // need params still
         rounds ++;
-        flow = max_flow(); // check fnct name, calls max flow algo
+        flow = max_flow(graph,&s,&t); // check fnct name, calls max flow algo
         if (flow <= 0)
             i = paths.size();
     }   // end for
@@ -120,13 +120,13 @@ void Controller::react_attack(vector<path> &paths) {
 void Controller::static_attack(vector<path> &paths) {
     short rounds = 1;
     short flow = check_flow();
-    for (auto i = 0; i < random_paths.size(); i++) {
+    for (auto i = 0; i < paths.size(); i++) {
         paths[i][1].is_alive(0);
         flow = flow - edge_capacity;
         update_report_data(); // need params still
         rounds ++;
         if (flow <= 0)
-            i = random_paths.size();
+            i = paths.size();
     }   // end for
 }   // end attack
 
