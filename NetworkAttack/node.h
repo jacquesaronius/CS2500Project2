@@ -30,7 +30,8 @@ public:
     std::vector<Edge> outgoing();
     bool visited() const { return m_visited; }
     void visited(const bool visited) { m_visited = visited; }
-
+    Node * parent(){ return m_parent; }
+    void setparent(Node * p){ m_parent = p; }
     Node(short id,
          std::string city,
          std::string state,

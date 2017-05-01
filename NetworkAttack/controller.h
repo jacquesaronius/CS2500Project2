@@ -4,6 +4,7 @@
 #include <QObject>
 #include "parser.h"
 #include "path.h"
+#include <vector>
 
 class Controller : public QObject
 {
@@ -13,10 +14,10 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
     int test_parser();
-    int maxFlow(int **, Node* s, Node *t);
+    int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
-    Path AugmentingPath(int **, Node* s, Node* t);
-    bool bfs(int **, Node* s, Node* t);
+    Path AugmentingPath(int **graph, Node* s, Node* t);
+    bool BFS(int **rgraph, Node* s, Node* t);
 
 signals:
 
