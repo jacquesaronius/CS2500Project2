@@ -8,6 +8,6 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 int Controller::test_parser()
 {
-
+    parser->parse("Kdl.gml");
     return 0;
 }

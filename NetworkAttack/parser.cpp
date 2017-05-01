@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "parser.h"
 
 Parser::Parser(QObject *parent) : QObject(parent)
@@ -53,55 +54,68 @@ bool Parser::parse(const QString file_name)
     QRegExp regex("\\s*(.*?)\\s\"?\?(.*?)\"?");
 
     QFile file(file_name);
+    QString line;
 
     deallocate();
 
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly))
     {
         qDebug("Failed to open file for parsing");
         return false;
     }
 
-    while (!file.atEnd())
+    QTextStream stream(&file);
+
+    while (stream.readLineInto(& line))
     {
 
+        bool next = 0; // Skip to next iteration
         std::string key;
         std::string value;
-        QString line = file.readLine();
+
+        qDebug() << line;
         if (line.contains(QRegExp("node\\s\\[")))
+        {
             mode = NODE_MODE;
+            next = true;
+        }
 
         if (line.contains(QRegExp("edge\\s\\[")))
+        {
             mode = EDGE_MODE;
-
-        if (regex.indexIn(line) != -1)
-        {
-            key = regex.cap(1).toStdString();
-            value = regex.cap(2).toStdString();
-            dictionary.emplace(std::pair<std::string, std::string>(key, value));
+            next = true;
         }
-        else
+        if (!next)
         {
-            if (mode == NODE_MODE)
+            if (regex.indexIn(line) != -1)
             {
-                Node * t = new Node(std::stoi(dictionary["id"]),
-                                    dictionary["label"],
-                                    dictionary["geocode_append"],
-                                    dictionary["Country"],
-                                    std::stof(dictionary["Latitude"]),
-                                    std::stof(dictionary["Longitude"]));
-                m_nodes.push_back(t);
-                dictionary.clear();
+                key = regex.cap(1).toStdString();
+                value = regex.cap(2).toStdString();
+                dictionary.emplace(std::pair<std::string, std::string>(key, value));
             }
-            else if (mode == EDGE_MODE)
+            else
             {
-                ids.push_back(std::stoi(dictionary["id"]));
-                sources.push_back(std::stoi(dictionary["source"]));
-                targets.push_back(std::stoi(dictionary["target"]));
-                dictionary.clear();
+                if (mode == NODE_MODE)
+                {
+                    Node * t = new Node(std::stoi(dictionary["id"]),
+                                        dictionary["label"],
+                                        dictionary["geocode_append"],
+                                        dictionary["Country"],
+                                        std::stof(dictionary["Latitude"]),
+                                        std::stof(dictionary["Longitude"]));
+                    m_nodes.push_back(t);
+                    dictionary.clear();
+                }
+                else if (mode == EDGE_MODE)
+                {
+                    ids.push_back(std::stoi(dictionary["id"]));
+                    sources.push_back(std::stoi(dictionary["source"]));
+                    targets.push_back(std::stoi(dictionary["target"]));
+                    dictionary.clear();
+                }
             }
-        }
 
+        }
     }
 
     /* Sort nodes by ID */
