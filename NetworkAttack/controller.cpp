@@ -35,7 +35,7 @@ int ** Controller::Calculategraph()
     return graph;
 }
 
-/*int Controller::maxFlow(int **graph, Node* s, Node *t)
+int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
     Node* v;
@@ -90,9 +90,9 @@ Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
     {
         if(v!=s)
         {
-          if(v->incoming()[i].source().id()==v->parent()->id())
+          if(v->incoming()[i]->source()->id()==v->parent()->id())
           {
-              Apath.add_edge(v->incoming()[i]);
+              Apath.add_edge(*(v->incoming()[i]));
               v=v->parent();
               i=0;
           }
@@ -201,7 +201,7 @@ int Controller::StaticRoutingFlow(Edge* e, int mflow)
         }
     }
     return mflow;
-}*/
+}
 
 int Controller::test_import()
 {
@@ -279,8 +279,8 @@ void Controller::ReActiveRouting(Node* s, Node * t)
 
 int ** Controller::RemoveEdge(int **graph, Edge* e)
 {
-    int u= e->source().id();
-    int v= e->target().id();
+    int u= e->source()->id();
+    int v= e->target()->id();
     graph[u][v]=0;
 
     return graph;
