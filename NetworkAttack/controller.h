@@ -22,11 +22,10 @@ public:
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
-    void react_attack(vector<path> &paths);
-    void static_attack(vector<path> &paths);
-    void Controller::base_attack(vector<Edges> &edges);
+    void react_attack(std::vector<Path> &paths);
+    void static_attack(std::vector<Path> &paths);
+    void Controller::base_attack(std::vector<Edges> &edges);
 
->>>>>>> 3c5e6a0480b77094087026c9c5fb4fd046a609a7
 signals:
 
 public slots:
