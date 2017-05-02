@@ -127,7 +127,7 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
          Node* u = Q.front();
          Q.pop_back();
 
-         for (unsigned int v=0; v<parser->nodes().size(); v++)
+         for (unsigned int v=0; v < parser->nodes().size(); v++)
          {
              if (parser->nodes()[v].visited()==false && rgraph[u->id()][parser->nodes()[v].id()] > 0)
              {
@@ -149,12 +149,19 @@ void Controller::addpath(Path path)
 void Controller::react_attack(std::vector<Path> &paths) {
     short rounds = 1;
     short attack_index = paths.size() - 1;
+
     for (auto i = 0; i < paths.size(); i++) {
+
         initial_flow = paths[i][attack_index].flow();
+
         paths[i][attack_index].alive(0);
+
         update_report_data(); // need params still
+
         rounds ++;
+
         if (current_flow <= 0)
+        
             i = paths.size();
     }   // end for
 }   // end attack
@@ -186,7 +193,7 @@ void Controller::base_attack(std::vector<Edges> &edges) {
     }   // end for
 }   // end attack
 
-int Controller::StaticRoutingFlow(Edge e, int mflow)
+int Controller::StaticRoutingFlow(Edge e)
 {
     for(auto i=paths.begin(); i!=paths.end(); i++)
     {
