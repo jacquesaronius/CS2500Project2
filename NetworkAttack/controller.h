@@ -19,13 +19,9 @@ public:
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
-<<<<<<< HEAD
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
-=======
-    Path AugmentingPath(int **, Node* s, Node* t);
-    bool bfs(int **, Node* s, Node* t);
     void react_attack(vector<path> &paths);
     void static_attack(vector<path> &paths);
     void Controller::base_attack(vector<Edges> &edges);

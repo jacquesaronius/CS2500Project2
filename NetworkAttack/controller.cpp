@@ -142,7 +142,7 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-void Controller::react_attack(vector<path> &paths, Node *s, Node *t) {
+void Controller::react_attack(std::vector<path> &paths, Node *s, Node *t) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {
@@ -156,7 +156,7 @@ void Controller::react_attack(vector<path> &paths, Node *s, Node *t) {
     }   // end for
 }   // end attack
 
-void Controller::static_attack(vector<path> &paths) {
+void Controller::static_attack(std::vector<path> &paths) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {
@@ -169,7 +169,7 @@ void Controller::static_attack(vector<path> &paths) {
     }   // end for
 }   // end attack
 
-void Controller::base_attack(vector<Edges> &edges) {
+void Controller::base_attack(std::vector<Edges> &edges) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < edges.size(); i++) {
