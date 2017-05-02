@@ -25,7 +25,7 @@ public:
     Node target() { return Node(* m_target); }
     bool alive() { return m_alive; }
     void alive(bool alive) { m_alive = alive; }
-    Edge(short id, Node * source, Node * target)
+    Edge(Node * source, Node * target, short id)
         : m_id(id), m_source(source), m_target(target), m_alive(0)
     {
         calc_capacity();

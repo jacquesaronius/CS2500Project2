@@ -11,8 +11,9 @@ class Node
     std::string m_city;
     std::string m_state;
     std::string m_country;
-    float m_latitude;
     float m_longitude;
+    float m_latitude;
+
     std::vector<Edge *> m_incoming, m_outgoing;
     bool m_visited;
     Node * m_parent = NULL;
@@ -21,6 +22,8 @@ class Node
 
 public:
     short id() { return m_id; }
+    void add_incoming(Edge *);
+    void add_outgoing(Edge *);
     std::string city() { return m_city; }
     std::string state() { return m_state; }
     std::string country() { return m_country; }
@@ -35,14 +38,14 @@ public:
          std::string city,
          std::string state,
          std::string country,
-         float latitude,
-         float longitude)
+         float longitude,
+         float latitude)
         : m_id(id),
           m_city(city),
           m_state(state),
           m_country(country),
-          m_latitude(latitude),
-          m_longitude(longitude) { }
+          m_longitude(longitude),
+          m_latitude(latitude) { }
     Node(const Node &);
 };
 
