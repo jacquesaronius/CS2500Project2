@@ -50,21 +50,25 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 
     int max_flow = 0;
 
-    while(BFS(rGraph, s, t)==true)
+    while(BFS(rGraph, s, t)==true && max_flow <=20)
     {
-        int path_flow = 20;
 
         Path P=AugmentingPath(rGraph, s, t);
         addpath(P);
 
         for (v=t; v != s; v=v->parent())
         {
+            if(max_flow <= 20)
+            {
             u = v->parent();
             rGraph[u->id()][v->id()] -= P.flow();
             rGraph[v->id()][u->id()] += P.flow();
+            }
         }
-
-        max_flow += path_flow;
+        if(max_flow+P.flow()<20)
+        {
+        max_flow += P.flow();
+        }
     }
     return max_flow;
 }
@@ -142,7 +146,7 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-void Controller::react_attack(std::vector<path> &paths, Node *s, Node *t) {
+void Controller::react_attack(std::vector<Path> &paths, Node *s, Node *t) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {
@@ -156,7 +160,7 @@ void Controller::react_attack(std::vector<path> &paths, Node *s, Node *t) {
     }   // end for
 }   // end attack
 
-void Controller::static_attack(std::vector<path> &paths) {
+void Controller::static_attack(std::vector<Path> &paths) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {
@@ -181,3 +185,18 @@ void Controller::base_attack(std::vector<Edges> &edges) {
             i = paths.size();
     }   // end for
 }   // end attack
+
+int Controller::StaticRoutingFlow(Edge e, int mflow)
+{
+    for(auto i=paths.begin(); i!=paths.end(); i++)
+    {
+        for(auto it=paths.edges().begin(); it!=paths.edges().begin(); it++)
+        {
+            if(e==paths[*i].m_edges[it])
+            {
+                mflow -= paths[i].flow();
+            }
+        }
+    }
+    return mflow;
+}
