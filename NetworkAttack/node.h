@@ -29,8 +29,8 @@ public:
     std::string country() { return m_country; }
     float latitude() { return m_latitude; }
     float longitude() { return m_longitude; }
-    std::vector<Edge> incoming();
-    std::vector<Edge> outgoing();
+    std::vector<Edge *> & incoming();
+    std::vector<Edge *> & outgoing();
     bool visited() const { return m_visited; }
     void visited(const bool visited) { m_visited = visited; }
     Node * parent(){ return m_parent; }

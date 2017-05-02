@@ -22,8 +22,8 @@ public:
     void flow(short flow) { m_flow = flow; }
     bool visited() { return m_visited; }
     void visited(bool visited) { m_visited = visited; }
-    Node source() { return Node(* m_source); }
-    Node target() { return Node(* m_target); }
+    Node * source() { return m_source; }
+    Node * target() { return m_target; }
     bool alive() { return m_alive; }
     void alive(bool alive) { m_alive = alive; }
     Edge(Node * source, Node * target, short id)

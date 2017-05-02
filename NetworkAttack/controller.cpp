@@ -1,5 +1,6 @@
 #include "controller.h"
 #include <vector>
+#include <iostream>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -17,14 +18,16 @@ int ** Controller::Calculategraph()
     int **graph=0;
     int k=0;
     graph = new int*[parser->nodes().size()];
-    for(auto i=parser->nodes().begin(); i!=parser->nodes().end(); i++)
+    auto nodes = parser->nodes();
+    for(auto i=nodes.begin(); i!=nodes.end(); i++)
     {
-        graph[k]=new int[parser->nodes().size()];
-        for(auto it=i->outgoing().begin(); it!=i->outgoing().end(); it++)
+        graph[k]=new int[nodes.size()];
+        auto outgoing = i->outgoing();
+        for(auto it=outgoing.begin(); it!=outgoing.end(); it++)
         {
-            if(it->visited()==false)
+            if((*it)->visited()==false)
             {
-                graph[i->id()][it->target().id()]=it->capacity();
+                graph[i->id()][(*it)->target()->id()]=(*it)->capacity();
             }
         }
         k++;
@@ -32,7 +35,7 @@ int ** Controller::Calculategraph()
     return graph;
 }
 
-int Controller::maxFlow(int **graph, Node* s, Node *t)
+/*int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
     Node* v;
@@ -198,6 +201,29 @@ int Controller::StaticRoutingFlow(Edge* e, int mflow)
         }
     }
     return mflow;
+}*/
+
+int Controller::test_import()
+{
+
+    parser->import();
+    return 0;
+}
+
+int Controller::test_calculate_graph()
+{
+    int ** graph;
+    parser->import();
+    graph = Calculategraph();
+
+    size_t size = parser->nodes().size();
+
+    for (size_t i = 0; i < size; i++)
+        for(size_t j = 0; j < size; j++)
+            std::cout << graph[j][i] << ",";
+        std::cout << std::endl;
+    return 0;
+
 }
 void Controller::StaticRouting(Node * s, Node * t)
 {

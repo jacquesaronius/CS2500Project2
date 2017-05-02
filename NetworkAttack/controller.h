@@ -31,6 +31,9 @@ public:
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
     Node* Source();
+
+    int test_import();
+    int test_calculate_graph();
 signals:
     void update();
 
