@@ -27,6 +27,7 @@ public:
     void base_attack(std::vector<Edge> &edges);
     int StaticRoutingFlow(Edge e, int mflow);
 signals:
+    void update();
 
 public slots:
 };
