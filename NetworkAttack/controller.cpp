@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <vector>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -14,44 +15,53 @@ int Controller::test_parser()
 int ** Controller::Calculategraph()
 {
     int **graph=0;
-    graph = new int*[m_nodes.size()];
-    for(auto i=m_nodes.begin(); i!=m_nodes.end; it++)
+    int k=0;
+    graph = new int*[parser->nodes().size()];
+    for(auto i=parser->nodes().begin(); i!=parser->nodes().end(); i++)
     {
-        graph[i]=new int[m_nodes.size()];
-        for(auto it=i.m_outgoing.begin(); it!=i.outgoing.end(); it++)
+        graph[k]=new int[parser->nodes().size()];
+        for(auto it=i->outgoing().begin(); it!=i->outgoing().end(); it++)
         {
-            if(it.visited()==false)
+            if(it->visited()==false)
             {
-                graph[i.id()][it.target().id()]=capacity();
+                graph[i->id()][it->target().id()]=it->capacity();
             }
         }
+        k++;
     }
     return graph;
 }
 
-int Controller::maxFlow(int **, Node* s, Node *t)
+int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
-    Node u, v;
+    Node* u;
+    Node* v;
+    std::vector<Path> graphpaths;
+    int ** rGraph=0;
 
-    int rGraph[m_nodes.size()][m_nodes.size()];
-
-    for (int i = 0; i < nodes.size(); i++)
-        for (int k = 0; k < nodes.size(); k++)
+    for (unsigned int i = 0; i < parser->nodes().size(); i++)
+    {
+        graph[i]=new int[parser->nodes().size()];
+        for (unsigned int k = 0; k < parser->nodes().size(); k++)
+        {
              rGraph[i][k] = graph[i][k];
+        }
+    }
 
     int max_flow = 0;
 
-    while (bfs(rGraph, s, t))
+    while(BFS(rGraph, s, t)==true)
     {
         int path_flow = 20;
 
-        path P=AugmentingPath(rGraph, s, t);
+        Path P=AugmentingPath(rGraph, s, t);
+        addpath(P);
 
-        for (v=t; v != s; v=v.getparent())
+        for (v=t; v != s; v=v->parent())
         {
-            u = v.getparent();
-            rGraph[u.m_id][v.m_id] -= P.flow();
-            rGraph[v.m_id][u.m_id] += P.flow();
+            u = v->parent();
+            rGraph[u->id()][v->id()] -= P.flow();
+            rGraph[v->id()][u->id()] += P.flow();
         }
 
         max_flow += path_flow;
@@ -59,48 +69,77 @@ int Controller::maxFlow(int **, Node* s, Node *t)
     return max_flow;
 }
 
-path Controller::AugmentingPath(int Graph[m_nodes.size()][m_nodes.size()], Node* s, Node* t)
+Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
 {
-    path Apath;
-    Node u, v;
+    Path Apath;
+    bool cancontinue;
+    Node * u;
+    Node * v;
     int path_flow = 20;
-    for (v=t; v!=s; v=v.parent())
+    for (v=t; v!=s; v=v->parent())
     {
-        u = v.parent();
-        path_flow = min(path_flow, Graph[u.m_id][v.m_id]);
+        u = v->parent();
+        if(path_flow>graph[u->id()][v->id()])
+            path_flow = graph[u->id()][v->id()];
     }
-
+    v=t;
+    int i=0;
+    while(v!=s && cancontinue==true)
+    {
+        if(v!=s)
+        {
+          if(v->incoming()[i].source().id()==v->parent()->id())
+          {
+              Apath.add_edge(v->incoming()[i]);
+              v=v->parent();
+              i=0;
+          }
+          else
+          {
+              i++;
+          }
+        }
+        if(v==s)
+        {
+            cancontinue=false;
+        }
+    }
     Apath.flow(path_flow);
     return Apath;
 }
 
-bool Controller::bfs(int **, Node* s, Node* t)
+bool Controller::BFS(int **rgraph, Node* s, Node* t)
 {
-    for(int i=0; i<m_nodes.size(); i++)
-         m_nodes[i].setvisited(false);
+    for(unsigned int i=0; i<parser->nodes().size(); i++)
+        parser->nodes()[i].visited(false);
 
-     vector <Node*> Q;
-     Q.push(s);
-     s.setvisited(true);
-     s.setparent(NULL);
+     std::vector <Node*> Q;
+     Q.push_back(s);
+     s->visited(true);
+     s->setparent(NULL);
 
      while (!Q.empty())
      {
-         int u = Q.front();
-         Q.pop();
+         Node* u = Q.front();
+         Q.pop_back();
 
-         for (int v=0; v<m_nodes.size(); v++)
+         for (unsigned int v=0; v<parser->nodes().size(); v++)
          {
-             if (m_nodes[v].visited==false && rGraph[u.m_id][v.m_id] > 0)
+             if (parser->nodes()[v].visited()==false && rgraph[u->id()][parser->nodes()[v].id()] > 0)
              {
-                 q.push(m_nodes[v]);
-                 v.setparent[u];
-                 v.visited(true);
+                 Q.push_back(&(parser->nodes()[v]));
+                 parser->nodes()[v].setparent(u);
+                 parser->nodes()[v].visited(true);
              }
          }
      }
 
-     return (visited[t] == true);
+     return (t->visited() == true);
+}
+
+void Controller::addpath(Path path)
+{
+    paths.push_back(path);
 }
 
 void Controller::react_attack(vector<path> &paths, Node *s, Node *t) {
