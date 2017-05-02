@@ -25,9 +25,9 @@ int ** Controller::Calculategraph()
         auto outgoing = i->outgoing();
         for(auto it=outgoing.begin(); it!=outgoing.end(); it++)
         {
-            if(it->visited()==false)
+            if((*it)->visited()==false)
             {
-                graph[i->id()][it->target().id()]=it->capacity();
+                graph[i->id()][(*it)->target()->id()]=(*it)->capacity();
             }
         }
         k++;

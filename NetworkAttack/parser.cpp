@@ -13551,11 +13551,11 @@ m_edges.push_back(e);
 for (auto it = m_edges.begin(); it != m_edges.end(); it++)
 {
     Edge * edge = *it;
-    Node * node = m_nodes[edge->source().id()];
+    Node * node = m_nodes[edge->source()->id()];
 
     node->add_outgoing(edge);
 
-    node = m_nodes[edge->target().id()];
+    node = m_nodes[edge->target()->id()];
 
     node->add_incoming(edge);
 }

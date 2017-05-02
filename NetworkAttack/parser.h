@@ -17,7 +17,6 @@ class Parser : public QObject
     std::vector<Edge *> m_edges;
     void deallocate();
     std::tuple<float, float> lng_lat();
-    Node * create_blacksite();
 
 
 public:
@@ -27,6 +26,7 @@ public:
     Node node(short id);
     std::vector<Node> nodes();
     std::vector<Edge> edges();
+    Node * create_blacksite();
     explicit Parser(QObject *parent = 0);
     ~Parser() { deallocate(); }
 

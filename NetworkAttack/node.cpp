@@ -12,41 +12,26 @@ Node::Node(const Node & rhs)
 
     for (auto i = rhs.m_incoming.begin(); i != rhs.m_incoming.end(); i++)
     {
-        m_incoming.push_back(*i);
+        Edge * e = new Edge(**i);
+        m_incoming.push_back(e);
     }
 
     for (auto i = rhs.m_outgoing.begin(); i != rhs.m_outgoing.end(); i++)
     {
-        m_outgoing.push_back(*i);
+        Edge * e = new Edge(**i);
+        m_outgoing.push_back(e);
     }
 }
 
-std::vector<Edge> Node::incoming()
+std::vector<Edge *> & Node::incoming()
 {
-    std::vector<Edge> v;
-
-    for (auto i = m_incoming.begin(); i != m_incoming.end(); i++)
-    {
-        Edge e((**i));
-        v.push_back(e);
-    }
-
-    return v;
+    return m_incoming;
 }
 
 
-std::vector<Edge> Node::outgoing()
+std::vector<Edge *> & Node::outgoing()
 {
-    std::vector<Edge> v;
-
-
-    for (auto i = m_outgoing.begin(); i != m_outgoing.end(); i++)
-    {
-        Edge e((**i));
-        v.push_back(e);
-    }
-
-    return v;
+    return m_outgoing;
 }
 
 void Node::add_incoming(Edge * e)
