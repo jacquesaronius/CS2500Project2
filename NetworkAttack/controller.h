@@ -23,14 +23,14 @@ public:
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
-    int ** Removeedge(int **graph, Edge e);
-    Edge react_attack();
-    Edge static_attack();
-    Edge base_attack();
-    void ReActiveRouting();
-    void StaticRouting();
-    int StaticRoutingFlow(Edge e, int mflow);
-    int ReActiveRoutingFlow(Edge e, int mflow, int **graph, Node * s, Node * t);
+    int ** RemoveEdge(int **graph, Edge* e);
+    Edge* react_attack();
+    Edge* static_attack();
+    Edge* base_attack();
+    void ReActiveRouting(Node * s, Node * t);
+    void StaticRouting(Node * s, Node * t);
+    int StaticRoutingFlow(Edge* e, int mflow);
+    Node* Source();
 signals:
     void update();
 

@@ -61,7 +61,6 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
             {
             u = v->parent();
             rGraph[u->id()][v->id()] -= P.flow();
-            rGraph[v->id()][u->id()] += P.flow();
             }
         }
         max_flow += P.flow();
@@ -142,8 +141,7 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-<<<<<<< HEAD
-Edge Controller::react_attack()
+Edge* Controller::react_attack()
 {
     Path p;
     std::vector<Edge> e;
@@ -159,10 +157,10 @@ Edge Controller::react_attack()
     }
     r=p.edges().size();
     e=p.edges();
-    return (e[r-2]);
+    return (&(e[r-2]));
 }
 
-Edge Controller::static_attack()
+Edge* Controller::static_attack()
 {
     Path p;
     int r=0;
@@ -171,10 +169,10 @@ Edge Controller::static_attack()
     p = paths[i];
     r = p.edges().size();
     e=p.edges();
-    return(e[r-2]);
+    return(&(e[r-2]));
 }
 
-Edge Controller::base_attack()
+Edge* Controller::base_attack()
 {
     Path p;
     std::vector<Edge> e;
@@ -183,17 +181,17 @@ Edge Controller::base_attack()
     p = paths[i];
     e=p.edges();
     k = rand() % e.size();
-    return(e[k]);
+    return(&(e[k]));
 }
 
 
-int Controller::StaticRoutingFlow(Edge e)
+int Controller::StaticRoutingFlow(Edge* e, int mflow)
 {
     for(auto i=paths.begin(); i!=paths.end(); i++)
     {
         for(auto it=i->edges().begin(); it!=i->edges().begin(); it++)
         {
-            if(e.id() == it->id())
+            if(e->id() == it->id())
             {
                 mflow -= i->flow();
             }
@@ -201,16 +199,14 @@ int Controller::StaticRoutingFlow(Edge e)
     }
     return mflow;
 }
-void Controller::StaticRouting()
+void Controller::StaticRouting(Node * s, Node * t)
 {
     int **graph=Calculategraph();
-    Node * s;
-    Node * t;
     int mode = 0;
     cin>>mode;
     cout<<endl;
     int flow = maxFlow(graph, s, t);
-    update_data(flow);
+    cout<<flow<<endl;
     Edge* e;
     while(flow>0)
     {
@@ -224,20 +220,18 @@ void Controller::StaticRouting()
                       break;
         }
         flow = StaticRoutingFlow(e, flow);
-        update_data(flow);
+        cout<<flow<<endl;
     }
 }
 
-void Controller::ReActiveRouting()
+void Controller::ReActiveRouting(Node* s, Node * t)
 {
     int **graph=Calculategraph();
-    Node * s;
-    Node * t;
     int mode = 0;
     cin>>mode;
     cout<<endl;
     int flow = maxFlow(graph, s, t);
-    update_data(flow);
+    cout<<flow<<endl;
     Edge* e;
     while(flow>0)
     {
@@ -250,18 +244,28 @@ void Controller::ReActiveRouting()
                case 3:e=react_attack();
                       break;
         }
-        graph = Removeedge(graph, e);
+        graph = RemoveEdge(graph, e);
         paths.clear();
         flow = maxFlow(graph, s , t);
-        update_data(flow);
+        cout<<flow<<endl;
     }
 }
 
-int ** Removeedge(int **graph, Edge e)
+int ** Controller::RemoveEdge(int **graph, Edge* e)
 {
-    int u= e.source().id();
-    int v= e.target().id();
+    int u= e->source().id();
+    int v= e->target().id();
     graph[u][v]=0;
 
     return graph;
+}
+
+Node* Controller::Source()
+{
+    Node * s;
+    for(int i=0; i<50; i++)
+    {
+
+    }
+    return s;
 }

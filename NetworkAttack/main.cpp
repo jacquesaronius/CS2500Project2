@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+
     //QGuiApplication app(argc, argv);
 
     //QQmlApplicationEngine engine;
@@ -16,8 +17,16 @@ int main(int argc, char *argv[])
     //return app.exec();
 
     Controller c;
-
-    c.test_parser();
+    Node * source;
+    Node * target;
+    int choice =0;
+    cin>>choice;
+    switch(choice){
+        case 0: c.StaticRouting(source, target);
+                break;
+        case 1: c.ReActiveRouting(source, target);
+                break;
+    }
 
     return 0;
 }

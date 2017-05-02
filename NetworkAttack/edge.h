@@ -10,8 +10,8 @@ class Edge
     short m_capacity;
     short m_flow;
     bool m_visited;
-    Node * m_source;
-    Node * m_target;
+    Node* m_source;
+    Node* m_target;
     bool m_alive;
     void calc_capacity();
 public:
@@ -32,7 +32,6 @@ public:
         calc_capacity();
     }
     Edge(const Edge &);
-
 };
 
 #endif // EDGE_H
