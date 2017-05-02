@@ -17,6 +17,7 @@ class Edge
 public:
     short id() { return m_id; }
     short capacity() { return m_capacity; }
+    void capacity(int c) {m_capacity = c;}
     short flow() { return m_flow; }
     void flow(short flow) { m_flow = flow; }
     bool visited() { return m_visited; }

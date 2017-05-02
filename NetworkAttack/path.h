@@ -14,6 +14,6 @@ public:
     short flow() const { return m_flow; }
     void flow(const short flow) { m_flow = flow; }
     std::shared_ptr<Edge> operator[](const size_t) const;
-    std::vector<Edge> edges();
+    std::vector<Edge> edges();;
 };
 #endif // PATH_H
