@@ -12,6 +12,17 @@ int Controller::test_parser()
     return 0;
 }
 
+void Controller::test_calculate(){
+    parser->import();
+    int **graph = Calculategraph();
+    for(auto i=0; i < parser->nodes().size(); i++){
+        for (auto j=0; j < parser->nodes().size(); j++){
+            cout << graph[i][j] << ", ";
+        }
+        cout << endl;
+    }
+}
+
 int ** Controller::Calculategraph()
 {
     int **graph=0;
@@ -31,7 +42,7 @@ int ** Controller::Calculategraph()
     }
     return graph;
 }
-
+/*
 int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
@@ -161,7 +172,7 @@ void Controller::react_attack(std::vector<Path> &paths) {
         rounds ++;
 
         if (current_flow <= 0)
-        
+
             i = paths.size();
     }   // end for
 }   // end attack
@@ -207,3 +218,4 @@ int Controller::StaticRoutingFlow(Edge e)
     }
     return mflow;
 }
+*/

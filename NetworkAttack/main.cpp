@@ -17,7 +17,9 @@ int main(int argc, char *argv[])
 
     Controller c;
 
-    c.test_parser();
+    c.test_calculate();
+
+
 
     return 0;
 }

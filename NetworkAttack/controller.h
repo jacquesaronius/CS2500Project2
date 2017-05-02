@@ -5,7 +5,9 @@
 #include <vector>
 #include "parser.h"
 #include "path.h"
-#include <vector>
+#include <iostream>
+
+using namespace std;
 
 class Controller : public QObject
 {
@@ -17,15 +19,16 @@ public:
 
     explicit Controller(QObject *parent = 0);
     int test_parser();
-    int maxFlow(int **graph, Node* s, Node *t);
+    //int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
-    Path AugmentingPath(int **graph, Node* s, Node* t);
-    bool BFS(int **rgraph, Node* s, Node* t);
-    void addpath(Path path);
-    void react_attack(std::vector<Path> &paths);
-    void static_attack(std::vector<Path> &paths);
-    void base_attack(std::vector<Edge> &edges);
-    int StaticRoutingFlow(Edge e, int mflow);
+    //Path AugmentingPath(int **graph, Node* s, Node* t);
+    //bool BFS(int **rgraph, Node* s, Node* t);
+    //void addpath(Path path);
+    //void react_attack(std::vector<Path> &paths);
+    //void static_attack(std::vector<Path> &paths);
+    //void base_attack(std::vector<Edge> &edges);
+    //int StaticRoutingFlow(Edge e, int mflow);
+    void test_calculate();
 signals:
 
 public slots:
