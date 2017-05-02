@@ -142,12 +142,12 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-void Controller::react_attack(std::vector<path> &paths, Node *s, Node *t) {
+void Controller::react_attack(std::vector<Path> &paths) {
     short rounds = 1;
-    short flow = check_flow();
+    short current_flow = flow;
     for (auto i = 0; i < paths.size(); i++) {
         paths[i][1].is_alive(0);
-        flow = flow - edge_capacity;
+        current_flow = current_flow - edge_capacity;
         update_report_data(); // need params still
         rounds ++;
         flow = max_flow(graph,&s,&t); // check fnct name, calls max flow algo
@@ -156,7 +156,7 @@ void Controller::react_attack(std::vector<path> &paths, Node *s, Node *t) {
     }   // end for
 }   // end attack
 
-void Controller::static_attack(std::vector<path> &paths) {
+void Controller::static_attack(std::vector<Path> &paths) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < paths.size(); i++) {

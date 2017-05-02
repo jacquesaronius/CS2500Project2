@@ -24,7 +24,7 @@ public:
     void addpath(Path path);
     void react_attack(std::vector<Path> &paths);
     void static_attack(std::vector<Path> &paths);
-    void Controller::base_attack(std::vector<Edges> &edges);
+    void base_attack(std::vector<Edge> &edges);
 
 signals:
 
