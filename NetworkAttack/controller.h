@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <vector>
 #include "parser.h"
 #include "path.h"
 #include <vector>
@@ -18,9 +19,18 @@ public:
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
+<<<<<<< HEAD
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
+=======
+    Path AugmentingPath(int **, Node* s, Node* t);
+    bool bfs(int **, Node* s, Node* t);
+    void react_attack(vector<path> &paths);
+    void static_attack(vector<path> &paths);
+    void Controller::base_attack(vector<Edges> &edges);
+
+>>>>>>> 3c5e6a0480b77094087026c9c5fb4fd046a609a7
 signals:
 
 public slots:
