@@ -19,29 +19,90 @@ Rectangle {
             id: toolbar1
             x: 8
             y: 8
-            width: 198
+            width: 120
             height: 40
 
             ToolButton {
                 id: tbStatic
                 x: 0
                 y: 0
-                text: qsTr("Static Routing")
+                text: qsTr("Static")
+                autoExclusive: true
+                checked: true
+                checkable: true
             }
 
             ToolButton {
                 id: tbDynamic
-                x: 90
+                x: 50
                 y: 0
-                text: qsTr("Dynamic Routing")
+                text: qsTr("Dynamic")
+                autoExclusive: true
+                checkable: true
             }
         }
 
         ToolBar {
             id: toolBar
-            x: 212
+            x: 134
             y: 8
-            width: 360
+            width: 658
+            height: 40
+
+            Slider {
+                id: sliderKValue
+                x: 93
+                y: 0
+                width: 129
+                height: 40
+                stepSize: 10
+                from: 10
+                to: 1000
+                value: 10
+            }
+
+            Slider {
+                id: sliderDelay
+                x: 223
+                y: 0
+                width: 129
+                height: 40
+                stepSize: 10
+                from: 10
+                to: 1000
+                value: 10
+
+                ToolButton {
+                    id: tbCreate
+                    x: 129
+                    y: 0
+                    text: qsTr("Create Network")
+                }
+            }
+
+            ToolButton {
+                id: tbBaseAttack
+                x: 0
+                y: 0
+                text: qsTr("Base Attack")
+                checkable: true
+            }
+
+            ToolButton {
+                id: tbReset
+                x: 472
+                y: 0
+                text: qsTr("Reset Network")
+            }
+
+            ToolButton {
+                id: tbAttack
+                x: 585
+                y: 0
+                width: 73
+                height: 40
+                text: qsTr("Attack!")
+            }
         }
     }
 }
