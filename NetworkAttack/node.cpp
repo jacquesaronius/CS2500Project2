@@ -42,3 +42,13 @@ std::vector<Edge> Node::outgoing()
 
     return v;
 }
+
+void Node::add_incoming(Edge * e)
+{
+    m_incoming.push_back(e);
+}
+
+void Node::add_outgoing(Edge * e)
+{
+    m_outgoing.push_back(e);
+}

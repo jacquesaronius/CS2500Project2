@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QFile>
+#include <QRegularExpression>
 #include <vector>
 #include <map>
 #include "node.h"
@@ -18,6 +19,7 @@ class Parser : public QObject
 
 public:
     bool parse(const QString);
+    bool import();
     Edge edge(short id);
     Node node(short id);
     std::vector<Node> nodes();
