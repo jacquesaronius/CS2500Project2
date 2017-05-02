@@ -146,16 +146,15 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-void Controller::react_attack(std::vector<Path> &paths, Node *s, Node *t) {
+void Controller::react_attack(std::vector<Path> &paths) {
     short rounds = 1;
-    short flow = check_flow();
+    short attack_index = paths.size() - 1;
     for (auto i = 0; i < paths.size(); i++) {
-        paths[i][1].is_alive(0);
-        flow = flow - edge_capacity;
+        initial_flow = paths[i][attack_index].flow();
+        paths[i][attack_index].alive(0);
         update_report_data(); // need params still
         rounds ++;
-        flow = max_flow(graph,&s,&t); // check fnct name, calls max flow algo
-        if (flow <= 0)
+        if (current_flow <= 0)
             i = paths.size();
     }   // end for
 }   // end attack
@@ -163,8 +162,9 @@ void Controller::react_attack(std::vector<Path> &paths, Node *s, Node *t) {
 void Controller::static_attack(std::vector<Path> &paths) {
     short rounds = 1;
     short flow = check_flow();
+    short attack_index = paths.size() - 1;
     for (auto i = 0; i < paths.size(); i++) {
-        paths[i][1].is_alive(0);
+        paths[i][attack_index].alive(0);
         flow = flow - edge_capacity;
         update_report_data(); // need params still
         rounds ++;
@@ -177,7 +177,7 @@ void Controller::base_attack(std::vector<Edges> &edges) {
     short rounds = 1;
     short flow = check_flow();
     for (auto i = 0; i < edges.size(); i++) {
-        edges[i].is_alive(0);
+        edges[i].alive(0);
         flow = flow - edge_capacity;
         update_report_data(); // need params still
         rounds ++;

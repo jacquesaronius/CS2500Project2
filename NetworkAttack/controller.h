@@ -22,7 +22,7 @@ public:
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
-    void react_attack(std::vector<Path> &paths, Node *s, Node *t);
+    void react_attack(std::vector<Path> &paths);
     void static_attack(std::vector<Path> &paths);
     void base_attack(std::vector<Edge> &edges);
     int StaticRoutingFlow(Edge e, int mflow);
