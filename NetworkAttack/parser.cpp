@@ -2089,7 +2089,7 @@ bool Parser::import()
     n = new Node(
       181,
       "Madison",
-      "None",
+      "West Virginia",
       "United States",
       -81.81929,
 
@@ -2432,7 +2432,7 @@ bool Parser::import()
     n = new Node(
       214,
       "Dubuque",
-      "None",
+      "Iowa",
       "United States",
       -90.66457,
 
@@ -2960,7 +2960,7 @@ bool Parser::import()
     n = new Node(
       262,
       "Bluefield",
-      "None",
+      "West Virginia",
       "United States",
       -81.22232,
 
@@ -3546,7 +3546,7 @@ bool Parser::import()
     n = new Node(
       318,
       "Ravenswood",
-      "None",
+      "West Virginia",
       "United States",
       -81.76096,
 
@@ -3557,7 +3557,7 @@ bool Parser::import()
     n = new Node(
       319,
       "Beckley",
-      "None",
+      "West Virginia",
       "United States",
       -81.18816,
 
@@ -3744,7 +3744,7 @@ bool Parser::import()
     n = new Node(
       336,
       "Gulfport",
-      "None",
+      "Mississippi",
       "United States",
       -89.09282,
 
@@ -5105,7 +5105,7 @@ bool Parser::import()
     n = new Node(
       468,
       "Johnston",
-      "None",
+      "South Carolina",
       "United States",
       -81.80094,
 
@@ -5127,7 +5127,7 @@ bool Parser::import()
     n = new Node(
       470,
       "Winnsboro",
-      "None",
+      "South Carolina",
       "United States",
       -81.08648,
 
@@ -5138,7 +5138,7 @@ bool Parser::import()
     n = new Node(
       471,
       "Columbia",
-      "None",
+      "South Carolina",
       "United States",
       -81.03481,
 
@@ -6195,7 +6195,7 @@ bool Parser::import()
     n = new Node(
       568,
       "Parkersburg",
-      "None",
+      "West Virginia",
       "United States",
       -81.56151,
 
@@ -6272,7 +6272,7 @@ bool Parser::import()
     n = new Node(
       575,
       "Martinsburg",
-      "None",
+      "West Virginia",
       "United States",
       -77.96389,
 
@@ -6813,7 +6813,7 @@ bool Parser::import()
     n = new Node(
       626,
       "Sioux Falls",
-      "None",
+      "South Dakota",
       "United States",
       -96.70033,
 
@@ -6848,7 +6848,7 @@ bool Parser::import()
     n = new Node(
       631,
       "Allendale",
-      "None",
+      "South Carolina",
       "United States",
       -81.30844,
 
@@ -6859,7 +6859,7 @@ bool Parser::import()
     n = new Node(
       633,
       "Estill",
-      "None",
+      "South Carolina",
       "United States",
       -81.24205,
 
@@ -7808,7 +7808,7 @@ bool Parser::import()
     n = new Node(
       722,
       "Wheeling",
-      "None",
+      "West Virginia",
       "United States",
       -80.72091,
 
@@ -8039,7 +8039,7 @@ bool Parser::import()
     n = new Node(
       743,
       "Moline",
-      "None",
+      "Illinois",
       "United States",
       -90.51513,
 
@@ -8072,7 +8072,7 @@ bool Parser::import()
     n = new Node(
       746,
       "Fargo",
-      "None",
+      "North Dakota",
       "United States",
       -96.7898,
 
