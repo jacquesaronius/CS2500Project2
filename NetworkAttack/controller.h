@@ -17,15 +17,17 @@ public:
 
     explicit Controller(QObject *parent = 0);
     int test_parser();
-    int maxFlow(int **graph, Node* s, Node *t);
+    //int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
-    Path AugmentingPath(int **graph, Node* s, Node* t);
-    bool BFS(int **rgraph, Node* s, Node* t);
-    void addpath(Path path);
-    void react_attack(std::vector<Path> &paths);
-    void static_attack(std::vector<Path> &paths);
-    void base_attack(std::vector<Edge> &edges);
-    int StaticRoutingFlow(Edge e, int mflow);
+    //Path AugmentingPath(int **graph, Node* s, Node* t);
+    //bool BFS(int **rgraph, Node* s, Node* t);
+    //void addpath(Path path);
+    //void react_attack(std::vector<Path> &paths);
+    //void static_attack(std::vector<Path> &paths);
+    //void base_attack(std::vector<Edge> &edges);
+    //int StaticRoutingFlow(Edge e, int mflow);
+    int test_import();
+    int test_calculate_graph();
 signals:
 
 public slots:

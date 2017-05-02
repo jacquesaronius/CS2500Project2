@@ -14,6 +14,11 @@ Node::Node(const Node & rhs)
     {
         m_incoming.push_back(*i);
     }
+
+    for (auto i = rhs.m_outgoing.begin(); i != rhs.m_outgoing.end(); i++)
+    {
+        m_outgoing.push_back(*i);
+    }
 }
 
 std::vector<Edge> Node::incoming()
@@ -33,6 +38,7 @@ std::vector<Edge> Node::incoming()
 std::vector<Edge> Node::outgoing()
 {
     std::vector<Edge> v;
+
 
     for (auto i = m_outgoing.begin(); i != m_outgoing.end(); i++)
     {

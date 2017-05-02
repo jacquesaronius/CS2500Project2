@@ -16,6 +16,9 @@ class Parser : public QObject
     std::vector<Node *> m_nodes;
     std::vector<Edge *> m_edges;
     void deallocate();
+    std::tuple<float, float> lng_lat();
+    Node * create_blacksite();
+
 
 public:
     bool parse(const QString);
