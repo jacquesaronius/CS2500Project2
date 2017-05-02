@@ -123,7 +123,7 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
          Node* u = Q.front();
          Q.pop_back();
 
-         for (unsigned int v=0; v<parser->nodes().size(); v++)
+         for (unsigned int v=0; v < parser->nodes().size(); v++)
          {
              if (parser->nodes()[v].visited()==false && rgraph[u->id()][parser->nodes()[v].id()] > 0)
              {
@@ -142,6 +142,7 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
+<<<<<<< HEAD
 Edge Controller::react_attack()
 {
     Path p;
@@ -184,7 +185,9 @@ Edge Controller::base_attack()
     k = rand() % e.size();
     return(e[k]);
 }
-int Controller::StaticRoutingFlow(Edge e, int mflow)
+
+
+int Controller::StaticRoutingFlow(Edge e)
 {
     for(auto i=paths.begin(); i!=paths.end(); i++)
     {

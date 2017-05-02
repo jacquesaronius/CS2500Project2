@@ -32,6 +32,7 @@ public:
     int StaticRoutingFlow(Edge e, int mflow);
     int ReActiveRoutingFlow(Edge e, int mflow, int **graph, Node * s, Node * t);
 signals:
+    void update();
 
 public slots:
 };
