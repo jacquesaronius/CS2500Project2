@@ -366,10 +366,10 @@ void Controller::attack()
     Target(t);
     if (mode() == MODE_STATIC_ROUTING)
     {
-        QtConcurrent::run(this, Controller::StaticRouting);
+        QtConcurrent::run(this, &Controller::StaticRouting);
     }
     else if (mode() == MODE_REACTIVE_ROUTING)
     {
-        QtConcurrent::run(this, Controller::ReActiveRouting);
+        QtConcurrent::run(this, &Controller::ReActiveRouting);
     }
 }
