@@ -71,13 +71,6 @@ Rectangle {
                 from: 10
                 to: 1000
                 value: 10
-
-                ToolButton {
-                    id: tbCreate
-                    x: 129
-                    y: 0
-                    text: qsTr("Create Network")
-                }
             }
 
             ToolButton {
@@ -86,6 +79,13 @@ Rectangle {
                 y: 0
                 text: qsTr("Base Attack")
                 checkable: true
+            }
+
+            ToolButton {
+                id: tbCreate
+                x: 352
+                y: 0
+                text: qsTr("Create Network")
             }
 
             ToolButton {
