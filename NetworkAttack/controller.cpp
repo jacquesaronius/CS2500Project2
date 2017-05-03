@@ -307,3 +307,42 @@ int Controller::test_node_copy()
     std::vector<Node> t = parser->nodes();
     return 0;
 }
+
+
+void SensorController::write_report(short id)
+{
+    auto t = time(NULL);
+    QString mode_names[3]
+    {
+        "base_attack",
+        "static_attack",
+        "react_attack"
+    };
+
+    QString file_names[9] =
+    {
+        "report_time_base_attack",
+        "report_50_base_attack",
+        "report_k_base_attack",
+        "report_time_static_attack",
+        "report_50_static_attack",
+        "report_k_static_attack",
+        "report_time_react_attack",
+        "report_50_react_attack",
+        "report_k_react_attack"
+    };
+
+    QString file_name = QString("%1_%2_%3.csv")
+            .arg(t)
+            .arg(mode_names[m_mode])
+            .arg(file_names[id]);
+
+    QFile file(file_name);
+
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(& file);
+        stream << reports[id];
+        file.close();
+    }
+}

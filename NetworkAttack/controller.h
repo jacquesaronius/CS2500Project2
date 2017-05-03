@@ -15,6 +15,15 @@ class Controller : public QObject
     std::vector<Path> paths;
     Parser * parser;
 public:
+    static const short report_time_base_attack = 0;
+    static const short report_50_base_attack = 1;
+    static const short report_k_base_attack = 2;
+    static const short report_time_static_attack = 3;
+    static const short report_50_static_attack = 4;
+    static const short report_k_static_attack = 5;
+    static const short report_time_react_attack = 6;
+    static const short report_50_react_attack = 7;
+    static const short report_k_react_attack = 8;
 
     explicit Controller(QObject *parent = 0);
     int test_parser();
@@ -31,6 +40,7 @@ public:
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
     Node* Source();
+    void write_report(short id)
 
     int test_import();
     int test_calculate_graph();
