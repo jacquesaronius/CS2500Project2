@@ -16,8 +16,7 @@ int ** Controller::Calculategraph()
 {
     int **graph=0;
     int k=0;
-    graph = new int*[parser->nodes().size()];
-    auto nodes = parser->nodes();
+    graph = new int*[nodes.size()];
     for(auto i=nodes.begin(); i!=nodes.end(); i++)
     {
         graph[k]=new int[nodes.size()];
@@ -41,10 +40,10 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
     std::vector<Path> graphpaths;
     int ** rGraph=0;
 
-    for (unsigned int i = 0; i < parser->nodes().size(); i++)
+    for (unsigned int i = 0; i < nodes.size(); i++)
     {
-        graph[i]=new int[parser->nodes().size()];
-        for (unsigned int k = 0; k < parser->nodes().size(); k++)
+        graph[i]=new int[nodes.size()];
+        for (unsigned int k = 0; k < nodes.size(); k++)
         {
              rGraph[i][k] = graph[i][k];
         }
@@ -111,8 +110,8 @@ Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
 
 bool Controller::BFS(int **rgraph, Node* s, Node* t)
 {
-    for(unsigned int i=0; i<parser->nodes().size(); i++)
-        parser->nodes()[i].visited(false);
+    for(unsigned int i=0; i<nodes.size(); i++)
+        nodes[i].visited(false);
 
      std::vector <Node*> Q;
      Q.push_back(s);
@@ -124,13 +123,13 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
          Node* u = Q.front();
          Q.pop_back();
 
-         for (unsigned int v=0; v < parser->nodes().size(); v++)
+         for (unsigned int v=0; v < nodes.size(); v++)
          {
-             if (parser->nodes()[v].visited()==false && rgraph[u->id()][parser->nodes()[v].id()] > 0)
+             if (nodes[v].visited()==false && rgraph[u->id()][nodes[v].id()] > 0)
              {
-                 Q.push_back(&(parser->nodes()[v]));
-                 parser->nodes()[v].setparent(u);
-                 parser->nodes()[v].visited(true);
+                 Q.push_back(&(nodes[v]));
+                 nodes[v].setparent(u);
+                 nodes[v].visited(true);
              }
          }
      }

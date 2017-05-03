@@ -36,7 +36,9 @@ public:
     static const short report_time_react_attack = 6;
     static const short report_50_react_attack = 7;
     static const short report_k_react_attack = 8;
-
+    static const short MODE_BASE_ATTACK=0;
+    static const short MODE_STATIC_ATTACK=1;
+    static const short MODE_REACTIVE_ATTACK=2;
     explicit Controller(QObject *parent = 0);
     short kvalue() { return m_kvalue; }
     void setKvalue(short kvalue) { m_kvalue = kvalue; }
