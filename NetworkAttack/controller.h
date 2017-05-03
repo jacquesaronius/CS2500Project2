@@ -34,6 +34,7 @@ public:
 
     int test_import();
     int test_calculate_graph();
+    int test_node_copy();
 signals:
     void update();
 

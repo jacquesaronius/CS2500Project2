@@ -35,6 +35,19 @@ std::vector<Node> Parser::nodes()
         n.push_back(t);
     }
 
+    for (auto i = m_nodes.begin(); i != m_nodes.end(); i++)
+    {
+        int id = (*i)->id();
+        Node * t = &(n[id]);
+        for (auto j = (*i)->outgoing().begin(); j != (*i)->outgoing().end(); j++)
+        {
+            Node * target = &(n[((*j)->target()->id())]);
+            Edge * e = new Edge(t, target, (*j)->id());
+            t->add_outgoing(e);
+            target->add_incoming(e);
+        }
+    }
+
     return n;
 }
 
@@ -832,8 +845,6 @@ bool Parser::import()
     );
   m_nodes.push_back(n);
   m_nodes.push_back(create_blacksite());
-  m_nodes.push_back(n);
-
     n = new Node(
       65,
       "Chesapeake",
@@ -3757,7 +3768,7 @@ bool Parser::import()
     );
   m_nodes.push_back(n);
   m_nodes.push_back(create_blacksite());
-
+    m_nodes.push_back(create_blacksite());
     n = new Node(
       340,
       "Kilmarnock",

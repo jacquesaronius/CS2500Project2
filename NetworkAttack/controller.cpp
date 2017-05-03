@@ -220,7 +220,12 @@ int Controller::test_calculate_graph()
 
     for (size_t i = 0; i < size; i++)
         for(size_t j = 0; j < size; j++)
-            std::cout << graph[j][i] << ",";
+        {
+            std::cout << graph[j][i];
+            if (i < size - 1)
+                std::cout << ",";
+        }
+
         std::cout << std::endl;
     return 0;
 
@@ -294,4 +299,11 @@ Node* Controller::Source()
 
     }
     return s;
+}
+
+int Controller::test_node_copy()
+{
+    parser->import();
+    std::vector<Node> t = parser->nodes();
+    return 0;
 }
