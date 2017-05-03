@@ -16,6 +16,7 @@ class Controller : public QObject
     Q_PROPERTY(short kvalue READ kvalue WRITE setKvalue)
     Q_PROPERTY(short delay READ delay WRITE setDelay)
     Q_PROPERTY(short mode READ mode WRITE setMode)
+    Q_PROPERTY(QString status READ status)
 
 
     std::vector<Path> paths;
@@ -25,6 +26,7 @@ class Controller : public QObject
     short m_rounds = 0;
     short m_delay = 50;
     short m_mode;
+    QString m_status;
 
 public:
     static const short report_time_base_attack = 0;
@@ -36,6 +38,9 @@ public:
     static const short report_time_react_attack = 6;
     static const short report_50_react_attack = 7;
     static const short report_k_react_attack = 8;
+    static const short MODE_ATTACK_BASE = 0;
+    static const short MODE_ATTACK_STATIC = 3;
+    static const short MODE_ATTACK_DYNAMIC = 6;
 
     explicit Controller(QObject *parent = 0);
     short kvalue() { return m_kvalue; }
@@ -60,10 +65,14 @@ public:
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
     void write_report(short id);
-    void attack();
+    Q_INVOKABLE void attack();
+    Q_INVOKABLE void reset();
+    Q_INVOKABLE void create();
+
     int test_import();
     int test_calculate_graph();
     int test_node_copy();
+    QString status() { return m_status; }
 
 signals:
     void update();

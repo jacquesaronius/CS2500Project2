@@ -9,5 +9,15 @@ Window {
 
     MainForm {
         anchors.fill: parent
+        Connections {
+                target: controller
+                onUpdate: {
+                    lblRounds.text = controller.rounds;
+                    txtStatus.text = "Test";
+                }
+
+        }
     }
+
+
 }
