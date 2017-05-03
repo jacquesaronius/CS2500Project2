@@ -8,8 +8,10 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QString>
 #include <vector>
+#include <QTextStream>
 #include "parser.h"
 #include "path.h"
+#include <ctime>
 using namespace std;
 
 class Controller : public QObject
@@ -17,14 +19,17 @@ class Controller : public QObject
     Q_OBJECT
     Q_PROPERTY(short kvalue READ kvalue WRITE setKvalue)
     Q_PROPERTY(short delay READ delay WRITE setDelay)
+    Q_PROPERTY(short mode READ mode WRITE setMode)
 
 
     std::vector<Path> paths;
-    std::vector<Node *> nodes;
+    std::vector<Node> nodes;
     Parser * parser;
     short m_kvalue = 50;
     short m_rounds = 0;
     short m_delay = 50;
+    short m_mode;
+
 public:
     static const short report_time_base_attack = 0;
     static const short report_50_base_attack = 1;
@@ -43,6 +48,8 @@ public:
     void setDelay(short delay) { m_delay = delay; }
     short rounds() { return m_rounds; }
     void setRounds(short rounds) { m_rounds = rounds; }
+    short mode() { return m_mode; }
+    void setMode(short mode) { m_mode = mode; }
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
@@ -56,8 +63,12 @@ public:
     void ReActiveRouting(Node * s, Node * t);
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
+
     Node* Source();
     void write_report(short id, short mode, short round, short maxFlow);
+
+
+    void attack();
 
     int test_import();
     int test_calculate_graph();

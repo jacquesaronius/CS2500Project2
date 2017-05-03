@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick webenginewidgets
+QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -8,8 +8,7 @@ SOURCES += main.cpp \
     edge.cpp \
     parser.cpp \
     controller.cpp \
-    path.cpp \
-    nawebenginepage.cpp
+    path.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,5 +39,4 @@ HEADERS += \
     edge.h \
     parser.h \
     controller.h \
-    path.h \
-    nawebenginepage.h
+    path.h

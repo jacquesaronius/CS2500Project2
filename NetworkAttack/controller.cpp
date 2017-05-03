@@ -1,6 +1,5 @@
 #include "controller.h"
 #include <vector>
-#include <iostream>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -206,14 +205,14 @@ int Controller::StaticRoutingFlow(Edge* e, int mflow)
 int Controller::test_import()
 {
 
-    parser->import();
+    parser->import(50);
     return 0;
 }
 
 int Controller::test_calculate_graph()
 {
     int ** graph;
-    parser->import();
+    parser->import(50);
     graph = Calculategraph();
 
     size_t size = parser->nodes().size();
@@ -255,7 +254,7 @@ void Controller::StaticRouting(Node * s, Node * t)
     }
 }
 
-void Controller::ReActiveRouting(Node* s, Node * t)
+void Controller::ReActiveRouting(Node * s, Node* t)
 {
     int **graph=Calculategraph();
     int mode = 0;
@@ -291,27 +290,23 @@ int ** Controller::RemoveEdge(int **graph, Edge* e)
     return graph;
 }
 
-Node* Controller::Source()
-{
-    Node * s;
-    for(int i=0; i<50; i++)
-    {
-
-    }
-    return s;
-}
 
 int Controller::test_node_copy()
 {
-    parser->import();
+    parser->import(50);
     std::vector<Node> t = parser->nodes();
     return 0;
 }
 
 
+<<<<<<< HEAD
 void Controller::write_report(short id, short mode, short round, short maxFlow)
+=======
+void Controller::write_report(short id)
+>>>>>>> 411e12562efc064c10221d55fa8eeb432c93318e
 {
     auto t = time(NULL);
+    std::vector<QString> reports;
     QString mode_names[3]
     {
         "base_attack",
@@ -345,4 +340,11 @@ void Controller::write_report(short id, short mode, short round, short maxFlow)
         stream << reports[id];
         file.close();
     }
+}
+
+void Controller::attack()
+{
+    nodes = parser->nodes();
+    Node * s = &(nodes[nodes.size()-2]);
+    Node * t = &(nodes[nodes.size()-1]);
 }

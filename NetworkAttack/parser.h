@@ -17,11 +17,12 @@ class Parser : public QObject
     std::vector<Edge *> m_edges;
     void deallocate();
     std::tuple<float, float> lng_lat();
-
+    const int SOURCE = -2;
+    const int TARGET = -1;
 
 public:
     bool parse(const QString);
-    bool import();
+    bool import(int k);
     Edge edge(short id);
     Node node(short id);
     std::vector<Node> nodes();
