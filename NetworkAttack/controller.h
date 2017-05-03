@@ -70,8 +70,8 @@ public:
     int StaticRoutingFlow(Edge* e, int mflow);
 
     Node* Source();
-    void write_report(short id, short mode);
-    void update_report_data(short id, short mode, short round, short maxFlow);
+    void write_report(short modes);
+    void update_report_data(short mode, short round, short maxFlow);
 
 
     void attack();
