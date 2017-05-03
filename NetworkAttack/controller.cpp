@@ -159,6 +159,7 @@ Edge* Controller::react_attack()
     }
     r=p.edges().size();
     e=p.edges();
+    m_rounds ++;
     return (&(e[r-2]));
 }
 
@@ -171,6 +172,7 @@ Edge* Controller::static_attack()
     p = paths[i];
     r = p.edges().size();
     e=p.edges();
+    m_rounds ++;
     return(&(e[r-2]));
 }
 
@@ -183,6 +185,7 @@ Edge* Controller::base_attack()
     p = paths[i];
     e=p.edges();
     k = rand() % e.size();
+    m_rounds ++;
     return(&(e[k]));
 }
 
@@ -234,9 +237,10 @@ void Controller::StaticRouting(Node * s, Node * t)
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
-    cout<<endl;
     int flow = maxFlow(graph, s, t);
-    cout<<flow<<endl;
+    update_report_data(mode, m_rounds, flow);
+    update_report_data(mode+1, m_rounds, flow);
+    update_report_data(mode+2, m_rounds, flow);
     Edge* e;
     while(flow>0)
     {
@@ -249,9 +253,14 @@ void Controller::StaticRouting(Node * s, Node * t)
                case 3:e=react_attack();
                       break;
         }
+        update_report_data(mode, m_rounds, flow);
+        update_report_data(mode+1, m_rounds, flow);
+        update_report_data(mode+2, m_rounds, flow);
         flow = StaticRoutingFlow(e, flow);
-        cout<<flow<<endl;
     }
+    write_report(mode);
+    write_report(mode+1);
+    write_report(mode+2);
 }
 
 void Controller::ReActiveRouting(Node * s, Node* t)
@@ -259,9 +268,10 @@ void Controller::ReActiveRouting(Node * s, Node* t)
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
-    cout<<endl;
     int flow = maxFlow(graph, s, t);
-    cout<<flow<<endl;
+    update_report_data(mode, m_rounds, flow);
+    update_report_data(mode+1, m_rounds, flow);
+    update_report_data(mode+2, m_rounds, flow);
     Edge* e;
     while(flow>0)
     {
@@ -276,9 +286,14 @@ void Controller::ReActiveRouting(Node * s, Node* t)
         }
         graph = RemoveEdge(graph, e);
         paths.clear();
+        update_report_data(mode, m_rounds, flow);
+        update_report_data(mode+1, m_rounds, flow);
+        update_report_data(mode+2, m_rounds, flow);
         flow = maxFlow(graph, s , t);
-        cout<<flow<<endl;
     }
+    write_report(mode);
+    write_report(mode+1);
+    write_report(mode+2);
 }
 
 int ** Controller::RemoveEdge(int **graph, Edge* e)
@@ -299,7 +314,7 @@ int Controller::test_node_copy()
 }
 
 
-void Controller::write_report(short id, short mode)
+void Controller::write_report(short modes)
 {
     auto t = time(NULL);
     std::vector<QString> reports;
@@ -325,23 +340,25 @@ void Controller::write_report(short id, short mode)
 
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
-            .arg(mode_names[mode])
-            .arg(file_names[id]);
+            .arg(mode_names[m_mode])
+            .arg(file_names[modes]);
 
     QFile file(file_name);
 
     if (file.open(QIODevice::WriteOnly))
     {
         QTextStream stream(& file);
-        stream << reports[id];
+        stream << reports[modes];
         file.close();
     }
 }
 
-void Controller::update_report_data(short id,short mode, short round, short maxFlow){
-    reports[id].append(QString("%1,%2\n")
+void Controller::update_report_data(short mode, short round, short maxFlow){
+    reports[mode].append(QString("%1,%2,%3,%4\n")
+                    .arg(mode)
                     .arg(round)
-                    .arg(maxFlow));
+                    .arg(maxFlow)
+                    .arg(m_kvalue));
 
 }
 
