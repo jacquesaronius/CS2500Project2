@@ -1,11 +1,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <iostream>
 #include <QObject>
 #include <vector>
 #include "parser.h"
 #include "path.h"
-#include <vector>
+using namespace std;
 
 class Controller : public QObject
 {
@@ -22,11 +23,20 @@ public:
     Path AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
     void addpath(Path path);
-    void react_attack(std::vector<Path> &paths);
-    void static_attack(std::vector<Path> &paths);
-    void base_attack(std::vector<Edge> &edges);
+    int ** RemoveEdge(int **graph, Edge* e);
+    Edge* react_attack();
+    Edge* static_attack();
+    Edge* base_attack();
+    void ReActiveRouting(Node * s, Node * t);
+    void StaticRouting(Node * s, Node * t);
+    int StaticRoutingFlow(Edge* e, int mflow);
+    Node* Source();
 
+    int test_import();
+    int test_calculate_graph();
+    int test_node_copy();
 signals:
+    void update();
 
 public slots:
 };

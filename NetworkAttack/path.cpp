@@ -10,3 +10,16 @@ std::shared_ptr<Edge> Path::operator [](const size_t i) const
 {
     return m_edges[i];
 }
+
+std::vector<Edge> Path::edges()
+{
+    std::vector<Edge> v;
+
+    for (auto i = m_edges.begin(); i != m_edges.end(); i++)
+    {
+        Edge e((**i));
+        v.push_back(e);
+    }
+
+    return v;
+}

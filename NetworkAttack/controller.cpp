@@ -1,5 +1,6 @@
 #include "controller.h"
 #include <vector>
+#include <iostream>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -17,14 +18,16 @@ int ** Controller::Calculategraph()
     int **graph=0;
     int k=0;
     graph = new int*[parser->nodes().size()];
-    for(auto i=parser->nodes().begin(); i!=parser->nodes().end(); i++)
+    auto nodes = parser->nodes();
+    for(auto i=nodes.begin(); i!=nodes.end(); i++)
     {
-        graph[k]=new int[parser->nodes().size()];
-        for(auto it=i->outgoing().begin(); it!=i->outgoing().end(); it++)
+        graph[k]=new int[nodes.size()];
+        auto outgoing = i->outgoing();
+        for(auto it=outgoing.begin(); it!=outgoing.end(); it++)
         {
-            if(it->visited()==false)
+            if((*it)->visited()==false)
             {
-                graph[i->id()][it->target().id()]=it->capacity();
+                graph[i->id()][(*it)->target()->id()]=(*it)->capacity();
             }
         }
         k++;
@@ -52,19 +55,18 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 
     while(BFS(rGraph, s, t)==true)
     {
-        int path_flow = 20;
 
         Path P=AugmentingPath(rGraph, s, t);
         addpath(P);
 
         for (v=t; v != s; v=v->parent())
         {
+            {
             u = v->parent();
             rGraph[u->id()][v->id()] -= P.flow();
-            rGraph[v->id()][u->id()] += P.flow();
+            }
         }
-
-        max_flow += path_flow;
+        max_flow += P.flow();
     }
     return max_flow;
 }
@@ -88,9 +90,9 @@ Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
     {
         if(v!=s)
         {
-          if(v->incoming()[i].source().id()==v->parent()->id())
+          if(v->incoming()[i]->source()->id()==v->parent()->id())
           {
-              Apath.add_edge(v->incoming()[i]);
+              Apath.add_edge(*(v->incoming()[i]));
               v=v->parent();
               i=0;
           }
@@ -123,7 +125,7 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
          Node* u = Q.front();
          Q.pop_back();
 
-         for (unsigned int v=0; v<parser->nodes().size(); v++)
+         for (unsigned int v=0; v < parser->nodes().size(); v++)
          {
              if (parser->nodes()[v].visited()==false && rgraph[u->id()][parser->nodes()[v].id()] > 0)
              {
@@ -142,42 +144,166 @@ void Controller::addpath(Path path)
     paths.push_back(path);
 }
 
-void Controller::react_attack(std::vector<Path> &paths) {
-    short rounds = 1;
-    short current_flow = flow;
-    for (auto i = 0; i < paths.size(); i++) {
-        paths[i][1].is_alive(0);
-        current_flow = current_flow - edge_capacity;
-        update_report_data(); // need params still
-        rounds ++;
-        flow = max_flow(graph,&s,&t); // check fnct name, calls max flow algo
-        if (flow <= 0)
-            i = paths.size();
-    }   // end for
-}   // end attack
+Edge* Controller::react_attack()
+{
+    Path p;
+    std::vector<Edge> e;
+    int max=0;
+    int r=0;
+    for (auto i=paths.begin(); i != paths.end(); i++)
+    {
+        if(i->flow()>max)
+        {
+            max=i->flow();
+            p=(*i);
+        }
+    }
+    r=p.edges().size();
+    e=p.edges();
+    return (&(e[r-2]));
+}
 
-void Controller::static_attack(std::vector<Path> &paths) {
-    short rounds = 1;
-    short flow = check_flow();
-    for (auto i = 0; i < paths.size(); i++) {
-        paths[i][1].is_alive(0);
-        flow = flow - edge_capacity;
-        update_report_data(); // need params still
-        rounds ++;
-        if (flow <= 0)
-            i = paths.size();
-    }   // end for
-}   // end attack
+Edge* Controller::static_attack()
+{
+    Path p;
+    int r=0;
+    std::vector<Edge> e;
+    int i =rand() % paths.size();
+    p = paths[i];
+    r = p.edges().size();
+    e=p.edges();
+    return(&(e[r-2]));
+}
 
-void Controller::base_attack(std::vector<Edges> &edges) {
-    short rounds = 1;
-    short flow = check_flow();
-    for (auto i = 0; i < edges.size(); i++) {
-        edges[i].is_alive(0);
-        flow = flow - edge_capacity;
-        update_report_data(); // need params still
-        rounds ++;
-        if (flow <= 0)
-            i = paths.size();
-    }   // end for
-}   // end attack
+Edge* Controller::base_attack()
+{
+    Path p;
+    std::vector<Edge> e;
+    int k=0;
+    int i =rand() % paths.size();
+    p = paths[i];
+    e=p.edges();
+    k = rand() % e.size();
+    return(&(e[k]));
+}
+
+
+int Controller::StaticRoutingFlow(Edge* e, int mflow)
+{
+    for(auto i=paths.begin(); i!=paths.end(); i++)
+    {
+        for(auto it=i->edges().begin(); it!=i->edges().begin(); it++)
+        {
+            if(e->id() == it->id())
+            {
+                mflow -= i->flow();
+            }
+        }
+    }
+    return mflow;
+}
+
+int Controller::test_import()
+{
+
+    parser->import();
+    return 0;
+}
+
+int Controller::test_calculate_graph()
+{
+    int ** graph;
+    parser->import();
+    graph = Calculategraph();
+
+    size_t size = parser->nodes().size();
+
+    for (size_t i = 0; i < size; i++)
+        for(size_t j = 0; j < size; j++)
+        {
+            std::cout << graph[j][i];
+            if (i < size - 1)
+                std::cout << ",";
+        }
+
+        std::cout << std::endl;
+    return 0;
+
+}
+void Controller::StaticRouting(Node * s, Node * t)
+{
+    int **graph=Calculategraph();
+    int mode = 0;
+    cin>>mode;
+    cout<<endl;
+    int flow = maxFlow(graph, s, t);
+    cout<<flow<<endl;
+    Edge* e;
+    while(flow>0)
+    {
+        switch(mode)
+        {
+               case 1:e=base_attack();
+                      break;
+               case 2:e=static_attack();
+                      break;
+               case 3:e=react_attack();
+                      break;
+        }
+        flow = StaticRoutingFlow(e, flow);
+        cout<<flow<<endl;
+    }
+}
+
+void Controller::ReActiveRouting(Node* s, Node * t)
+{
+    int **graph=Calculategraph();
+    int mode = 0;
+    cin>>mode;
+    cout<<endl;
+    int flow = maxFlow(graph, s, t);
+    cout<<flow<<endl;
+    Edge* e;
+    while(flow>0)
+    {
+        switch(mode)
+        {
+               case 1:e=base_attack();
+                      break;
+               case 2:e=static_attack();
+                      break;
+               case 3:e=react_attack();
+                      break;
+        }
+        graph = RemoveEdge(graph, e);
+        paths.clear();
+        flow = maxFlow(graph, s , t);
+        cout<<flow<<endl;
+    }
+}
+
+int ** Controller::RemoveEdge(int **graph, Edge* e)
+{
+    int u= e->source()->id();
+    int v= e->target()->id();
+    graph[u][v]=0;
+
+    return graph;
+}
+
+Node* Controller::Source()
+{
+    Node * s;
+    for(int i=0; i<50; i++)
+    {
+
+    }
+    return s;
+}
+
+int Controller::test_node_copy()
+{
+    parser->import();
+    std::vector<Node> t = parser->nodes();
+    return 0;
+}

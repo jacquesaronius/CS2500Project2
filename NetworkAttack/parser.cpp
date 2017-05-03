@@ -7,11 +7,6 @@ Parser::Parser(QObject *parent) : QObject(parent)
 
 void Parser::deallocate()
 {
-    for (auto i = m_nodes.begin(); i != m_nodes.end(); i++)
-        delete (*i);
-
-    for (auto i = m_edges.begin(); i != m_edges.end(); i++)
-        delete (*i);
 
     m_nodes.clear();
     m_edges.clear();
@@ -38,6 +33,19 @@ std::vector<Node> Parser::nodes()
     {
         Node t(*(*i));
         n.push_back(t);
+    }
+
+    for (auto i = m_nodes.begin(); i != m_nodes.end(); i++)
+    {
+        int id = (*i)->id();
+        Node * t = &(n[id]);
+        for (auto j = (*i)->outgoing().begin(); j != (*i)->outgoing().end(); j++)
+        {
+            Node * target = &(n[((*j)->target()->id())]);
+            Edge * e = new Edge(t, target, (*j)->id());
+            t->add_outgoing(e);
+            target->add_incoming(e);
+        }
     }
 
     return n;
@@ -802,7 +810,7 @@ bool Parser::import()
       37.91763
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       61,
@@ -836,9 +844,7 @@ bool Parser::import()
       36.72653
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(n);
-
+  m_nodes.push_back(create_blacksite());
     n = new Node(
       65,
       "Chesapeake",
@@ -882,7 +888,7 @@ bool Parser::import()
       39.54007
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       70,
@@ -1026,7 +1032,7 @@ bool Parser::import()
       34.12093
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       84,
@@ -1610,8 +1616,7 @@ bool Parser::import()
       39.60678
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(n);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       138,
@@ -2283,7 +2288,7 @@ bool Parser::import()
       41.66199
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       200,
@@ -2394,7 +2399,7 @@ bool Parser::import()
       39.82894
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       211,
@@ -3022,8 +3027,8 @@ bool Parser::import()
       37.99672
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       270,
@@ -3310,7 +3315,7 @@ bool Parser::import()
       38.11425
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       297,
@@ -3762,8 +3767,8 @@ bool Parser::import()
       30.77436
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-
+  m_nodes.push_back(create_blacksite());
+    m_nodes.push_back(create_blacksite());
     n = new Node(
       340,
       "Kilmarnock",
@@ -3796,7 +3801,7 @@ bool Parser::import()
       44.52358
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       344,
@@ -3808,7 +3813,7 @@ bool Parser::import()
       43.45777
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       346,
@@ -3820,7 +3825,7 @@ bool Parser::import()
       40.51868
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       348,
@@ -4085,7 +4090,7 @@ bool Parser::import()
       37.7645
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       373,
@@ -4273,9 +4278,9 @@ bool Parser::import()
       39.93759
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       393,
@@ -6157,7 +6162,7 @@ bool Parser::import()
       41.34366
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       565,
@@ -6543,7 +6548,7 @@ bool Parser::import()
       29.88327
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       601,
@@ -6577,7 +6582,7 @@ bool Parser::import()
       42.96336
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       605,
@@ -6820,8 +6825,8 @@ bool Parser::import()
       43.54997
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       629,
@@ -6855,7 +6860,7 @@ bool Parser::import()
       33.00793
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
     n = new Node(
       633,
       "Estill",
@@ -6866,9 +6871,9 @@ bool Parser::import()
       32.75489
     );
   m_nodes.push_back(n);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
-  m_nodes.push_back(NULL);
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
+  m_nodes.push_back(create_blacksite());
 
     n = new Node(
       637,
@@ -13557,14 +13562,43 @@ m_edges.push_back(e);
 for (auto it = m_edges.begin(); it != m_edges.end(); it++)
 {
     Edge * edge = *it;
-    Node * node = m_nodes[edge->source().id()];
+    Node * node = m_nodes[edge->source()->id()];
 
     node->add_outgoing(edge);
 
-    node = m_nodes[edge->target().id()];
+    node = m_nodes[edge->target()->id()];
 
     node->add_incoming(edge);
 }
 
 return true;
 }
+
+std::tuple<float, float> Parser::lng_lat()
+{
+    const short MIN_LNG = 70;
+    const short MIN_LAT = 25;
+    const short DILATION = 100;
+
+    float lng = rand() * (MIN_LNG * DILATION);
+    float lat = rand() * (MIN_LAT * DILATION);
+
+    std::tuple<float, float> t(lng, lat);
+
+    return t;
+
+}
+
+Node * Parser::create_blacksite()
+{
+    std::tuple<float, float> coords = lng_lat();
+    Node * n = new Node(m_nodes.size(),
+                        "CIA Blacksite",
+                        "CIA Blacksite",
+                        "United States",
+                        std::get<0>(coords),
+                        std::get<1>(coords));
+    return n;
+}
+
+
