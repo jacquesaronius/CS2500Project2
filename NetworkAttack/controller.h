@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QObject>
 #include <vector>
+#include <QTextStream>
 #include "parser.h"
 #include "path.h"
 #include <ctime>
@@ -14,6 +15,7 @@ class Controller : public QObject
     Q_OBJECT
     Q_PROPERTY(short kvalue READ kvalue WRITE setKvalue)
     Q_PROPERTY(short delay READ delay WRITE setDelay)
+    Q_PROPERTY(short mode READ mode WRITE setMode)
 
 
     std::vector<Path> paths;
@@ -22,6 +24,7 @@ class Controller : public QObject
     short m_kvalue = 50;
     short m_rounds = 0;
     short m_delay = 50;
+    short m_mode;
 
 public:
     static const short report_time_base_attack = 0;
@@ -41,6 +44,8 @@ public:
     void setDelay(short delay) { m_delay = delay; }
     short rounds() { return m_rounds; }
     void setRounds(short rounds) { m_rounds = rounds; }
+    short mode() { return m_mode; }
+    void setMode(short mode) { m_mode = mode; }
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();

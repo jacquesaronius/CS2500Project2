@@ -302,6 +302,7 @@ int Controller::test_node_copy()
 void Controller::write_report(short id)
 {
     auto t = time(NULL);
+    std::vector<QString> reports;
     QString mode_names[3]
     {
         "base_attack",
@@ -340,6 +341,6 @@ void Controller::write_report(short id)
 void Controller::attack()
 {
     nodes = parser->nodes();
-    Node * s = nodes[nodes.size()-2];
-    Node * t = nodes[nodes.size()-1];
+    Node * s = &(nodes[nodes.size()-2]);
+    Node * t = &(nodes[nodes.size()-1]);
 }
