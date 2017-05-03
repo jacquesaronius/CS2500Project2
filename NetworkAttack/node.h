@@ -15,7 +15,7 @@ class Node
     float m_latitude;
 
     std::vector<Edge *> m_incoming, m_outgoing;
-    bool m_visited;
+    bool m_visited = 0;
     Node * m_parent = NULL;
     short m_distance = 0;
 
