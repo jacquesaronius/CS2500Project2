@@ -363,7 +363,7 @@ void Controller::update_report_data(short mode, short round, short maxFlow){
 
 void Controller::attack()
 {
-    nodes = parser->nodes();
-    Node * s = &(nodes[nodes.size()-2]);
-    Node * t = &(nodes[nodes.size()-1]);
+    Parser->import(50);
+    //Node * s = &(nodes[nodes.size()-2]);
+    //Node * t = &(nodes[nodes.size()-1]);
 }
