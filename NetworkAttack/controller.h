@@ -16,6 +16,7 @@ class Controller : public QObject
     Q_PROPERTY(short kvalue READ kvalue WRITE setKvalue)
     Q_PROPERTY(short delay READ delay WRITE setDelay)
     Q_PROPERTY(short mode READ mode WRITE setMode)
+    Q_PROPERTY(short rounds READ rounds WRITE setRounds)
     Q_PROPERTY(QString status READ status)
 
 

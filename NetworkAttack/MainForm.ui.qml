@@ -2,17 +2,20 @@ import QtQuick 2.6
 import QtQuick.Controls 2.1
 
 Rectangle {
-    id: rectangle
-    property alias rectangle: rectangle
-
+    property alias txtStatus: txtStatus
     property alias lblRounds: lblRounds
+    id: rectangle
+    width: 800
 
     height: 600
+    property alias tbStaticAttack: tbStaticAttack
+    property alias tbReset: tbReset
+    property alias tbBaseAttack: tbBaseAttack
+    property alias sliderKValue: sliderKValue
 
     MouseArea {
-
-        property alias txtStatus: txtStatus
         property alias mouseArea: mouseArea
+        width: 800
         id: mouseArea
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
@@ -54,23 +57,13 @@ Rectangle {
             width: 658
             height: 40
 
-            Slider {
-                id: sliderKValue
-                x: 93
-                y: 0
-                width: 259
-                height: 40
-                stepSize: 10
-                from: 10
-                to: 1000
-                value: 10
-            }
-
             ToolButton {
                 id: tbBaseAttack
                 x: 0
                 y: 0
                 text: qsTr("Base Attack")
+                checked: true
+                autoExclusive: true
                 checkable: true
             }
 
@@ -96,7 +89,38 @@ Rectangle {
                 height: 40
                 text: qsTr("Attack!")
             }
+
+            ToolButton {
+                id: tbStaticAttack
+                x: 94
+                y: 0
+                text: qsTr("Static Attack")
+                autoExclusive: true
+                checkable: true
+            }
+
+            ToolButton {
+                id: tbDynAttack
+                x: 189
+                y: 0
+                text: qsTr("Dynamic Attack")
+                autoExclusive: true
+                checked: false
+                checkable: true
+            }
+
+            Slider {
+                id: sliderKValue
+                x: 0
+                y: 546
+                stepSize: 1
+                from: 10
+                to: 500
+                orientation: Qt.Horizontal
+                value: 50
+            }
         }
+
 
         Label {
             id: label
@@ -109,32 +133,40 @@ Rectangle {
             id: lblRounds
             x: 70
             y: 575
-            text: qsTr("")
+            text: qsTr("0")
         }
+
 
         TextArea {
             id: txtStatus
             x: 8
             y: 54
             width: 784
-            height: 515
+            height: 440
             text: qsTr("")
+        }
+
+        Label {
+            id: label1
+            x: 344
+            y: 575
+            text: qsTr("K:")
         }
     }
 
     Connections {
         target: tbStatic
-        onClicked: controller.setMode(controller.MODE_ATTACK_STATIC)
+        onClicked: controller.mode = MODE_ATTACK_STATIC;
     }
 
     Connections {
         target: tbDynamic
-        onClicked: controller.setMode(controller.MODE_ATTACK_DYNAMIC)
+        onClicked: controller.mode = MODE_ATTACK_DYNAMIC;
     }
 
     Connections {
         target: tbBaseAttack
-        onClicked: controller.setMode(controller.MODE_ATTACK_BASE)
+        onClicked: controller.mode = MODE_ATTACK_BASE * 0;
     }
 
     Connections {
@@ -145,10 +177,18 @@ Rectangle {
     Connections {
         target: tbReset
         onClicked: controller.reset()
+
+    }
+
+    Connections {
+        target: tbAttack
+        onClicked: controller.mode = sliderKValue.value
     }
 
     Connections {
         target: tbAttack
         onClicked: controller.attack()
     }
+
+
 }

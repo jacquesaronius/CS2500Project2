@@ -341,9 +341,9 @@ void Controller::write_report(short id)
 void Controller::attack()
 {
     update();
-    nodes = parser->nodes();
-    Node * s = &(nodes[nodes.size()-2]);
-    Node * t = &(nodes[nodes.size()-1]);
+    //nodes = parser->nodes();
+    //Node * s = &(nodes[nodes.size()-2]);
+    //Node * t = &(nodes[nodes.size()-1]);
 }
 
 void Controller::reset()
