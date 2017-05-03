@@ -380,9 +380,11 @@ void Controller::attack()
 
 void Controller::reset()
 {
-
+    nodes = parser->nodes();
 }
 
 void Controller::create()
 {
+    parser->import(m_kvalue);
+    reset();
 }
