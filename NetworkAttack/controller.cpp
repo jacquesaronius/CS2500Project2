@@ -299,11 +299,7 @@ int Controller::test_node_copy()
 }
 
 
-<<<<<<< HEAD
-void Controller::write_report(short id, short mode, short round, short maxFlow)
-=======
-void Controller::write_report(short id)
->>>>>>> 411e12562efc064c10221d55fa8eeb432c93318e
+void Controller::write_report(short id, short mode)
 {
     auto t = time(NULL);
     std::vector<QString> reports;
@@ -340,6 +336,13 @@ void Controller::write_report(short id)
         stream << reports[id];
         file.close();
     }
+}
+
+void Controller::update_report_data(short id,short mode, short round, short maxFlow){
+    reports[id].append(QString("%1,%2\n")
+                    .arg(round)
+                    .arg(maxFlow));
+
 }
 
 void Controller::attack()
