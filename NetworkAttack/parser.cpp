@@ -145,7 +145,7 @@ bool Parser::parse(const QString file_name)
 
 }
 
-bool Parser::import()
+bool Parser::import(int k)
 {
     Node * n;
     Edge * e;
@@ -8162,7 +8162,10 @@ bool Parser::import()
     );
   m_nodes.push_back(n);
 
-
+    n=create_blacksite();
+    m_nodes.push_back(n);
+    n=create_blacksite();
+    m_nodes.push_back(n);
   e = new Edge(
     m_nodes[0],
     m_nodes[237],
@@ -13557,7 +13560,42 @@ m_edges.push_back(e);
     8
   );
 m_edges.push_back(e);
-
+int r1=0;
+for(int i = 0; i< k; k++)
+{
+    r1=rand() % m_nodes.size();
+    if(m_nodes[r1]->incoming()[m_nodes[r1]->incoming().size()]->source()!=m_nodes[m_nodes.size()-2])
+    {
+    e=new Edge(
+    m_nodes[m_nodes.size()-2],
+    m_nodes[r1],
+    20
+    );
+    m_edges.push_back(e);
+    }
+    else
+    {
+         k--;
+    }
+}
+int r2=0;
+for(int i = 0; i< k; k++)
+{
+    r2=rand() % m_nodes.size();
+    if(m_nodes[r2]->outgoing()[m_nodes[r2]->outgoing().size()]->target()!=m_nodes[m_nodes.size()-1])
+    {
+    e=new Edge(
+    m_nodes[r2],
+    m_nodes[m_nodes.size()-1],
+    20
+    );
+    m_edges.push_back(e);
+    }
+    else
+    {
+        k--;
+    }
+}
 
 for (auto it = m_edges.begin(); it != m_edges.end(); it++)
 {
@@ -13600,5 +13638,4 @@ Node * Parser::create_blacksite()
                         std::get<1>(coords));
     return n;
 }
-
 

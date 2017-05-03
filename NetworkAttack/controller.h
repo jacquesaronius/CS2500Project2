@@ -21,6 +21,7 @@ class Controller : public QObject
     short m_kvalue = 50;
     short m_rounds = 0;
     short m_delay = 50;
+    short m_kvalue;
 public:
 
     explicit Controller(QObject *parent = 0);
@@ -40,11 +41,9 @@ public:
     Edge* react_attack();
     Edge* static_attack();
     Edge* base_attack();
-    void ReActiveRouting(Node * s, Node * t);
-    void StaticRouting(Node * s, Node * t);
+    void ReActiveRouting();
+    void StaticRouting();
     int StaticRoutingFlow(Edge* e, int mflow);
-    Node* Source();
-
     int test_import();
     int test_calculate_graph();
     int test_node_copy();

@@ -206,14 +206,14 @@ int Controller::StaticRoutingFlow(Edge* e, int mflow)
 int Controller::test_import()
 {
 
-    parser->import();
+    parser->import(50);
     return 0;
 }
 
 int Controller::test_calculate_graph()
 {
     int ** graph;
-    parser->import();
+    parser->import(50);
     graph = Calculategraph();
 
     size_t size = parser->nodes().size();
@@ -230,8 +230,10 @@ int Controller::test_calculate_graph()
     return 0;
 
 }
-void Controller::StaticRouting(Node * s, Node * t)
+void Controller::StaticRouting()
 {
+    Node * s = parser->nodes()[parser->nodes().size()-2];
+    Node * t = parser->nodes()[parser->nodes().size()-1];
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
@@ -255,8 +257,10 @@ void Controller::StaticRouting(Node * s, Node * t)
     }
 }
 
-void Controller::ReActiveRouting(Node* s, Node * t)
+void Controller::ReActiveRouting()
 {
+    Node * s = parser->nodes()[parser->nodes().size()-2];
+    Node * t = parser->nodes()[parser->nodes().size()-1];
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
@@ -291,15 +295,6 @@ int ** Controller::RemoveEdge(int **graph, Edge* e)
     return graph;
 }
 
-Node* Controller::Source()
-{
-    Node * s;
-    for(int i=0; i<50; i++)
-    {
-
-    }
-    return s;
-}
 
 int Controller::test_node_copy()
 {
