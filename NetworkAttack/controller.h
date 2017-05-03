@@ -31,7 +31,7 @@ class Controller : public QObject
     short m_rounds = 0;
     short m_delay = 50;
     short m_mode;
-    short m_attack;
+    short m_attack_mode;
     Node * m_source;
     Node * m_target;
 public:
@@ -60,8 +60,8 @@ public:
     void setRounds(short rounds) { m_rounds = rounds; }
     short mode() { return m_mode; }
     void setMode(short mode) { m_mode = mode; }
-    short mattack() { return m_attack; }
-    void setattack(short attack) { m_attack = attack; }
+    short attackMode() { return m_attack_mode; }
+    void setaAttackMode(short attack) { m_attack_mode = attack; }
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();

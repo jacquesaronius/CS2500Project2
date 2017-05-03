@@ -235,13 +235,13 @@ void Controller::StaticRouting()
 {
     int **graph=Calculategraph();
     int flow = maxFlow(graph, Source(), Target());
-    update_report_data(mode(), m_rounds, flow);
-    update_report_data(mode()+1, m_rounds, flow);
-    update_report_data(mode()+2, m_rounds, flow);
+    update_report_data(attackMode(), m_rounds, flow);
+    update_report_data(attackMode()+1, m_rounds, flow);
+    update_report_data(attackMode()+2, m_rounds, flow);
     Edge* e;
     while(flow>0)
     {
-        switch(mode())
+        switch(attackMode())
         {
                case MODE_BASE_ATTACK:e=base_attack();
                       break;
@@ -250,27 +250,27 @@ void Controller::StaticRouting()
                case MODE_REACTIVE_ATTACK:e=react_attack();
                       break;
         }
-        update_report_data(mode(), m_rounds, flow);
-        update_report_data(mode()+1, m_rounds, flow);
-        update_report_data(mode()+2, m_rounds, flow);
+        update_report_data(attackMode(), m_rounds, flow);
+        update_report_data(attackMode()+1, m_rounds, flow);
+        update_report_data(attackMode()+2, m_rounds, flow);
         flow = StaticRoutingFlow(e, flow);
     }
-    write_report(mode());
-    write_report(mode()+1);
-    write_report(mode()+2);
+    write_report(attackMode());
+    write_report(attackMode()+1);
+    write_report(attackMode()+2);
 }
 
 void Controller::ReActiveRouting()
 {
     int **graph=Calculategraph();
     int flow = maxFlow(graph, Source(), Target());
-    update_report_data(mode(), m_rounds, flow);
-    update_report_data(mode()+1, m_rounds, flow);
-    update_report_data(mode()+2, m_rounds, flow);
+    update_report_data(attackMode(), m_rounds, flow);
+    update_report_data(attackMode()+1, m_rounds, flow);
+    update_report_data(attackMode()+2, m_rounds, flow);
     Edge* e;
     while(flow>0)
     {
-        switch(mode())
+        switch(attackMode())
         {
                case MODE_BASE_ATTACK:e=base_attack();
                       break;
@@ -281,14 +281,14 @@ void Controller::ReActiveRouting()
         }
         graph = RemoveEdge(graph, e);
         paths.clear();
-        update_report_data(mode(), m_rounds, flow);
-        update_report_data(mode()+1, m_rounds, flow);
-        update_report_data(mode()+2, m_rounds, flow);
+        update_report_data(attackMode(), m_rounds, flow);
+        update_report_data(attackMode()+1, m_rounds, flow);
+        update_report_data(attackMode()+2, m_rounds, flow);
         flow = maxFlow(graph, Source() , Target());
     }
-    write_report(mode());
-    write_report(mode()+1);
-    write_report(mode()+2);
+    write_report(attackMode());
+    write_report(attackMode()+1);
+    write_report(attackMode()+2);
 }
 
 int ** Controller::RemoveEdge(int **graph, Edge* e)
@@ -364,11 +364,11 @@ void Controller::attack()
     Node * t = &(nodes[nodes.size()-1]);
     Source(s);
     Target(t);
-    if (m_attack == MODE_STATIC_ROUTING)
+    if (mode() == MODE_STATIC_ROUTING)
     {
         QtConcurrent::run(this, Controller::StaticRouting);
     }
-    else if (m_attack == MODE_REACTIVE_ROUTING)
+    else if (mode() == MODE_REACTIVE_ROUTING)
     {
         QtConcurrent::run(this, Controller::ReActiveRouting);
     }
