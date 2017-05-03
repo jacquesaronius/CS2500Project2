@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <QObject>
+#include <QDebug>
+#include <QThread>
+#include <QtConcurrent/QtConcurrent>
+#include <QString>
 #include <vector>
 #include "parser.h"
 #include "path.h"
@@ -53,7 +57,7 @@ public:
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
     Node* Source();
-    void write_report(short id)
+    void write_report(short id, short mode, short round, short maxFlow);
 
     int test_import();
     int test_calculate_graph();

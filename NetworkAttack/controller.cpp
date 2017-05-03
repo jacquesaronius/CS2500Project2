@@ -309,7 +309,7 @@ int Controller::test_node_copy()
 }
 
 
-void SensorController::write_report(short id)
+void Controller::write_report(short id, short mode, short round, short maxFlow)
 {
     auto t = time(NULL);
     QString mode_names[3]
@@ -334,7 +334,7 @@ void SensorController::write_report(short id)
 
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
-            .arg(mode_names[m_mode])
+            .arg(mode_names[mode])
             .arg(file_names[id]);
 
     QFile file(file_name);
