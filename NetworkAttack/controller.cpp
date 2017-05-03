@@ -1,6 +1,5 @@
 #include "controller.h"
 #include <vector>
-#include <iostream>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -230,10 +229,8 @@ int Controller::test_calculate_graph()
     return 0;
 
 }
-void Controller::StaticRouting()
+void Controller::StaticRouting(Node * s, Node * t)
 {
-    Node * s = parser->nodes()[parser->nodes().size()-2];
-    Node * t = parser->nodes()[parser->nodes().size()-1];
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
@@ -257,10 +254,8 @@ void Controller::StaticRouting()
     }
 }
 
-void Controller::ReActiveRouting()
+void Controller::ReActiveRouting(Node * s, Node* t)
 {
-    Node * s = parser->nodes()[parser->nodes().size()-2];
-    Node * t = parser->nodes()[parser->nodes().size()-1];
     int **graph=Calculategraph();
     int mode = 0;
     cin>>mode;
@@ -298,7 +293,53 @@ int ** Controller::RemoveEdge(int **graph, Edge* e)
 
 int Controller::test_node_copy()
 {
-    parser->import();
+    parser->import(50);
     std::vector<Node> t = parser->nodes();
     return 0;
+}
+
+
+void Controller::write_report(short id)
+{
+    auto t = time(NULL);
+    QString mode_names[3]
+    {
+        "base_attack",
+        "static_attack",
+        "react_attack"
+    };
+
+    QString file_names[9] =
+    {
+        "report_time_base_attack",
+        "report_50_base_attack",
+        "report_k_base_attack",
+        "report_time_static_attack",
+        "report_50_static_attack",
+        "report_k_static_attack",
+        "report_time_react_attack",
+        "report_50_react_attack",
+        "report_k_react_attack"
+    };
+
+    QString file_name = QString("%1_%2_%3.csv")
+            .arg(t)
+            .arg(mode_names[m_mode])
+            .arg(file_names[id]);
+
+    QFile file(file_name);
+
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(& file);
+        stream << reports[id];
+        file.close();
+    }
+}
+
+void Controller::attack()
+{
+    nodes = parser->nodes();
+    Node * s = nodes[nodes.size()-2];
+    Node * t = nodes[nodes.size()-1];
 }

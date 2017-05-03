@@ -16,14 +16,6 @@ int main(int argc, char *argv[])
 
     //return app.exec();
     Controller c;
-    int choice =0;
-    cin>>choice;
-    switch(choice){
-        case 0: c.StaticRouting();
-                break;
-        case 1: c.ReActiveRouting();
-                break;
-    }
 
     return 0;
 }
