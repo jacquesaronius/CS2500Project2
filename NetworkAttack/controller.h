@@ -22,6 +22,7 @@ class Controller : public QObject
     Q_PROPERTY(short mode READ mode WRITE setMode)
 
 
+
     std::vector<Path> paths;
     std::vector<Node> nodes;
     std::vector<QString> reports;
@@ -30,9 +31,13 @@ class Controller : public QObject
     short m_rounds = 0;
     short m_delay = 50;
     short m_mode;
-
+    short m_attack;
+    Node * m_source;
+    Node * m_target;
 public:
 
+    static const short MODE_STATIC_ROUTING=0;
+    static const short MODE_REACTIVE_ROUTING=1;
     static const short MODE_BASE_ATTACK=0;
     static const short MODE_STATIC_ATTACK=1;
     static const short MODE_REACTIVE_ATTACK=2;
@@ -55,6 +60,8 @@ public:
     void setRounds(short rounds) { m_rounds = rounds; }
     short mode() { return m_mode; }
     void setMode(short mode) { m_mode = mode; }
+    short mattack() { return m_attack; }
+    void setattack(short attack) { m_attack = attack; }
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
@@ -65,11 +72,13 @@ public:
     Edge* react_attack();
     Edge* static_attack();
     Edge* base_attack();
-    void ReActiveRouting(Node * s, Node * t);
-    void StaticRouting(Node * s, Node * t);
+    void ReActiveRouting();
+    void StaticRouting();
     int StaticRoutingFlow(Edge* e, int mflow);
-
-    Node* Source();
+    void Source(Node * s){m_source =s;}
+    Node* Source(){return m_source;}
+    void Target(Node * t){m_target =t;}
+    Node* Target(){return m_target;}
     void write_report(short modes);
     void update_report_data(short mode, short round, short maxFlow);
 
