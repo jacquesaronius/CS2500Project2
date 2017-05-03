@@ -298,7 +298,7 @@ int Controller::test_node_copy()
 }
 
 
-void Controller::write_report(short id)
+void Controller::write_report(short id, short mode)
 {
     auto t = time(NULL);
     std::vector<QString> reports;
@@ -324,7 +324,7 @@ void Controller::write_report(short id)
 
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
-            .arg(mode_names[m_mode])
+            .arg(mode_names[mode])
             .arg(file_names[id]);
 
     QFile file(file_name);
@@ -335,6 +335,13 @@ void Controller::write_report(short id)
         stream << reports[id];
         file.close();
     }
+}
+
+void Controller::update_report_data(short id,short mode, short round, short maxFlow){
+    reports[id].append(QString("%1,%2\n")
+                    .arg(round)
+                    .arg(maxFlow));
+
 }
 
 void Controller::attack()

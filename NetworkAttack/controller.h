@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <QObject>
+#include <QDebug>
+#include <QThread>
+#include <QtConcurrent/QtConcurrent>
+#include <QString>
 #include <vector>
 #include <QTextStream>
 #include "parser.h"
@@ -20,6 +24,7 @@ class Controller : public QObject
 
     std::vector<Path> paths;
     std::vector<Node> nodes;
+    std::vector<QString> reports;
     Parser * parser;
     short m_kvalue = 50;
     short m_rounds = 0;
@@ -27,18 +32,20 @@ class Controller : public QObject
     short m_mode;
 
 public:
-    static const short report_time_base_attack = 0;
-    static const short report_50_base_attack = 1;
-    static const short report_k_base_attack = 2;
-    static const short report_time_static_attack = 3;
-    static const short report_50_static_attack = 4;
-    static const short report_k_static_attack = 5;
-    static const short report_time_react_attack = 6;
-    static const short report_50_react_attack = 7;
-    static const short report_k_react_attack = 8;
+
     static const short MODE_BASE_ATTACK=0;
     static const short MODE_STATIC_ATTACK=1;
     static const short MODE_REACTIVE_ATTACK=2;
+    static const short REPORT_TIME_BASE_ATTACK = 0;
+    static const short REPORT_50_BASE_ATTACK = 1;
+    static const short REPORT_K_BASE_ATTACK = 2;
+    static const short REPORT_TIME_STATIC_ATTACK = 3;
+    static const short REPORT_50_STATIC_ATTACK = 4;
+    static const short REPORT_K_STATIC_ATTACK = 5;
+    static const short REPORT_TIME_REACT_ATTACK = 6;
+    static const short REPORT_50_REACT_ATTACK = 7;
+    static const short REPORT_K_REACT_ATTACK = 8;
+
     explicit Controller(QObject *parent = 0);
     short kvalue() { return m_kvalue; }
     void setKvalue(short kvalue) { m_kvalue = kvalue; }
@@ -61,8 +68,14 @@ public:
     void ReActiveRouting(Node * s, Node * t);
     void StaticRouting(Node * s, Node * t);
     int StaticRoutingFlow(Edge* e, int mflow);
-    void write_report(short id);
+
+    Node* Source();
+    void write_report(short id, short mode);
+    void update_report_data(short id, short mode, short round, short maxFlow);
+
+
     void attack();
+
     int test_import();
     int test_calculate_graph();
     int test_node_copy();
