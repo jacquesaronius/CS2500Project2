@@ -372,4 +372,17 @@ void Controller::attack()
     {
         QtConcurrent::run(this, &Controller::ReActiveRouting);
     }
+    update();
+    //nodes = parser->nodes();
+    //Node * s = &(nodes[nodes.size()-2]);
+    //Node * t = &(nodes[nodes.size()-1]);
+}
+
+void Controller::reset()
+{
+
+}
+
+void Controller::create()
+{
 }

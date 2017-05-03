@@ -20,6 +20,9 @@ class Controller : public QObject
     Q_PROPERTY(short kvalue READ kvalue WRITE setKvalue)
     Q_PROPERTY(short delay READ delay WRITE setDelay)
     Q_PROPERTY(short mode READ mode WRITE setMode)
+    Q_PROPERTY(short attackMode READ attackMode WRITE setAttackMode)
+    Q_PROPERTY(short rounds READ rounds WRITE setRounds)
+    Q_PROPERTY(QString status READ status)
 
 
 
@@ -34,6 +37,7 @@ class Controller : public QObject
     short m_attack_mode;
     Node * m_source;
     Node * m_target;
+    QString m_status;
 public:
 
     static const short MODE_STATIC_ROUTING=0;
@@ -51,6 +55,9 @@ public:
     static const short REPORT_50_REACT_ATTACK = 7;
     static const short REPORT_K_REACT_ATTACK = 8;
 
+
+
+
     explicit Controller(QObject *parent = 0);
     short kvalue() { return m_kvalue; }
     void setKvalue(short kvalue) { m_kvalue = kvalue; }
@@ -61,7 +68,7 @@ public:
     short mode() { return m_mode; }
     void setMode(short mode) { m_mode = mode; }
     short attackMode() { return m_attack_mode; }
-    void setaAttackMode(short attack) { m_attack_mode = attack; }
+    void setAttackMode(short attack) { m_attack_mode = attack; }
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
@@ -82,12 +89,14 @@ public:
     void write_report(short modes);
     void update_report_data(short mode, short round, short maxFlow);
 
-
-    void attack();
+    Q_INVOKABLE void attack();
+    Q_INVOKABLE void reset();
+    Q_INVOKABLE void create();
 
     int test_import();
     int test_calculate_graph();
     int test_node_copy();
+    QString status() { return m_status; }
 
 signals:
     void update();
