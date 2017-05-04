@@ -316,13 +316,15 @@ void Controller::write_report(short modes)
         "report_static_attack",
         "report_react_attack",
     };
-
+    qDebug() << m_mode;
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
             .arg(mode_names[m_mode])
             .arg(file_names[modes]);
 
     QFile file(file_name);
+
+    qDebug() << reports.size();
 
     if (file.open(QIODevice::WriteOnly))
     {
@@ -371,6 +373,14 @@ void Controller::reset()
 
 void Controller::create()
 {
+    reports.clear();
+    for (int j = 0; j < REPORT_K_REACT_ATTACK + 1; j++)
+    {
+        QString r;
+        reports.push_back(r);
+    }
+
+    qDebug() << reports.size();
     parser->import(m_kvalue);
     reset();
     m_status = "Network creeated.";
