@@ -19,7 +19,7 @@ int ** Controller::Calculategraph()
     graph = new int*[nodes.size()];
     for(int r=0; r<nodes.size(); ++r)
     {
-        graph[k]=new int[nodes.size()];
+        graph[r]=new int[nodes.size()];
     }
     for(auto i=nodes.begin(); i!=nodes.end(); i++)
     {
@@ -336,13 +336,15 @@ void Controller::write_report(short modes)
         "report_50_react_attack",
         "report_k_react_attack"
     };
-
+    qDebug() << m_mode;
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
             .arg(mode_names[m_mode])
             .arg(file_names[modes]);
 
     QFile file(file_name);
+
+    qDebug() << reports.size();
 
     if (file.open(QIODevice::WriteOnly))
     {
@@ -391,6 +393,14 @@ void Controller::reset()
 
 void Controller::create()
 {
+    reports.clear();
+    for (int j = 0; j < REPORT_K_REACT_ATTACK + 1; j++)
+    {
+        QString r;
+        reports.push_back(r);
+    }
+
+    qDebug() << reports.size();
     parser->import(m_kvalue);
     reset();
     m_status = "Network creeated.";

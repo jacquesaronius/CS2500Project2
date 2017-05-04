@@ -197,7 +197,7 @@ Rectangle {
 
     Connections {
         target: tbAttack
-        onClicked: controller.mode = sliderKValue.value
+        onClicked: controller.kvalue = sliderKValue.value
     }
 
     Connections {
