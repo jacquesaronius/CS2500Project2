@@ -171,7 +171,7 @@ Edge* Controller::static_attack()
     Path p;
     int r=0;
     std::vector<Edge> e;
-    int i =rand() % paths.size();
+    int i =rand() % static_cast<int>(paths.size());
     p = paths[i];
     r = p.edges().size();
     e=p.edges();
@@ -184,7 +184,7 @@ Edge* Controller::base_attack()
     Path p;
     std::vector<Edge> e;
     int k=0;
-    int i =rand() % paths.size();
+    int i =rand() % static_cast<int>(paths.size());
     p = paths[i];
     e=p.edges();
     k = rand() % e.size();
