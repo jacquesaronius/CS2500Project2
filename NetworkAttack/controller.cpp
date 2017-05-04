@@ -381,10 +381,14 @@ void Controller::attack()
 void Controller::reset()
 {
     nodes = parser->nodes();
+    m_status = "Network reset.";
+    update();
 }
 
 void Controller::create()
 {
     parser->import(m_kvalue);
     reset();
+    m_status = "Network creeated.";
+    update();
 }
