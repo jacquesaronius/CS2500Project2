@@ -137,13 +137,18 @@ Rectangle {
         }
 
 
-        TextArea {
-            id: txtStatus
+        Flickable {
             x: 8
             y: 54
             width: 784
             height: 440
-            text: qsTr("")
+            TextArea.flickable: TextArea {
+                id: txtStatus
+
+                text: qsTr("")
+            }
+
+            ScrollBar.vertical: ScrollBar { }
         }
 
         Label {
@@ -186,23 +191,27 @@ Rectangle {
 
     Connections {
         target: tbCreate
-        onClicked: controller.create()
+        onClicked: {
+            txtStatus.text = qsTr("");
+            controller.create();
+        }
     }
 
     Connections {
         target: tbReset
-        onClicked: controller.reset()
-
+        onClicked: {
+            onClicked: txtStatus.text = qsTr("");
+            controller.reset();
+        }
     }
+
 
     Connections {
         target: tbAttack
-        onClicked: controller.mode = sliderKValue.value
-    }
-
-    Connections {
-        target: tbAttack
-        onClicked: controller.attack()
+        onClicked: {
+            controller.mode = sliderKValue.value;
+            controller.attack();
+        }
     }
 
 

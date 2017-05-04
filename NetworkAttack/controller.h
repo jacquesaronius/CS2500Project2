@@ -38,6 +38,7 @@ class Controller : public QObject
     Node * m_source;
     Node * m_target;
     QString m_status;
+    void callback(bool);
 public:
 
     static const short MODE_STATIC_ROUTING=0;

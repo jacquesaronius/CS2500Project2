@@ -389,6 +389,16 @@ void Controller::create()
 {
     parser->import(m_kvalue);
     reset();
-    m_status = "Network creeated.";
+    m_status = "Network created.";
     update();
+}
+
+void Controller::callback(bool running)
+{
+    update();
+    if (running)
+    {
+        QThread::msleep(m_delay);
+    }
+
 }
