@@ -310,17 +310,11 @@ void Controller::write_report(short modes)
         "react_attack"
     };
 
-    QString file_names[9] =
+    QString file_names[3] =
     {
-        "report_time_base_attack",
-        "report_time_static_attack",
-        "report_time_react_attack",
-        "report_50_base_attack",
-        "report_50_static_attack",
-        "report_50_static_attack",
-        "report_k_base_attack",
-        "report_k_static_attack",
-        "report_k_react_attack"
+        "report_base_attack",
+        "report_static_attack",
+        "report_react_attack",
     };
 
     QString file_name = QString("%1_%2_%3.csv")
