@@ -14,12 +14,15 @@ int Controller::test_parser()
 
 int ** Controller::Calculategraph()
 {
-    int **graph=0;
+    int **graph;
     int k=0;
     graph = new int*[nodes.size()];
-    for(auto i=nodes.begin(); i!=nodes.end(); i++)
+    for(int r=0; r<nodes.size(); ++r)
     {
         graph[k]=new int[nodes.size()];
+    }
+    for(auto i=nodes.begin(); i!=nodes.end(); i++)
+    {
         auto outgoing = i->outgoing();
         for(auto it=outgoing.begin(); it!=outgoing.end(); it++)
         {
@@ -37,18 +40,19 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
     Node* v;
-    std::vector<Path> graphpaths;
-    int ** rGraph=0;
-
-    for (unsigned int i = 0; i < nodes.size(); i++)
+    int **rGraph;
+    rGraph = new int*[nodes.size()];
+    for (unsigned int i = 0; i < nodes.size(); ++i)
     {
-        graph[i]=new int[nodes.size()];
-        for (unsigned int k = 0; k < nodes.size(); k++)
+        rGraph[i]=new int[nodes.size()];
+    }
+    for(unsigned int r=0; r<nodes.size(); r++)
+    {
+         for (unsigned int k = 0; k < nodes.size(); k++)
         {
-             rGraph[i][k] = graph[i][k];
+              rGraph[r][k] = graph[r][k];
         }
     }
-
     int max_flow = 0;
 
     while(BFS(rGraph, s, t)==true)

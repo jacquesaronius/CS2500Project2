@@ -9,7 +9,6 @@ Node::Node(const Node & rhs)
     m_country = rhs.m_country;
     m_latitude = rhs.m_latitude;
     m_longitude = rhs.m_longitude;
-    m_visited=false;
 }
 
 std::vector<Edge *> & Node::incoming()
