@@ -21,6 +21,7 @@ class Node
 
 
 public:
+    Node();
     short id() { return m_id; }
     void add_incoming(Edge *);
     void add_outgoing(Edge *);

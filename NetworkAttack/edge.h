@@ -15,6 +15,7 @@ class Edge
     bool m_alive;
     void calc_capacity();
 public:
+    Edge();
     short id() { return m_id; }
     short capacity() { return m_capacity; }
     void capacity(int c) {m_capacity = c;}

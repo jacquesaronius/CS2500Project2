@@ -1,6 +1,11 @@
 #include "path.h"
 
-void Path::add_edge(const Edge e)
+Path::Path()
+{
+    m_flow=0;
+}
+
+void Path::add_edge(Edge e)
 {
     std::shared_ptr<Edge> p(std::make_shared<Edge>(e));
     m_edges.push_back(p);
@@ -22,4 +27,21 @@ std::vector<Edge> Path::edges()
     }
 
     return v;
+}
+
+void Path::adde(Edge* e)
+{
+    medge.push_back(e);
+}
+
+std::vector<Edge*> Path::mredges()
+{
+    std::vector<Edge*> e;
+
+    for (auto i = medge.begin(); i != medge.end(); i++)
+    {
+        e.push_back(*i);
+    }
+
+    return e;
 }

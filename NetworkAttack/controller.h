@@ -26,7 +26,7 @@ class Controller : public QObject
 
 
 
-    std::vector<Path> paths;
+    std::vector<Path*> paths;
     std::vector<Node> nodes;
     std::vector<QString> reports;
     Parser * parser;
@@ -57,7 +57,7 @@ public:
 
 
 
-
+    void incrementRound();
     explicit Controller(QObject *parent = 0);
     short kvalue() { return m_kvalue; }
     void setKvalue(short kvalue) { m_kvalue = kvalue; }
@@ -72,9 +72,9 @@ public:
     int test_parser();
     int maxFlow(int **graph, Node* s, Node *t);
     int ** Calculategraph();
-    Path AugmentingPath(int **graph, Node* s, Node* t);
+    Path* AugmentingPath(int **graph, Node* s, Node* t);
     bool BFS(int **rgraph, Node* s, Node* t);
-    void addpath(Path path);
+    void addpath(Path * path);
     int ** RemoveEdge(int **graph, Edge* e);
     Edge* react_attack();
     Edge* static_attack();
@@ -87,7 +87,7 @@ public:
     void Target(Node * t){m_target =t;}
     Node* Target(){return m_target;}
     void write_report(short modes);
-    void update_report_data(short mode, short round, short maxFlow);
+    void update_report_data(short mode,short round, short maxFlow);
 
     Q_INVOKABLE void attack();
     Q_INVOKABLE void reset();

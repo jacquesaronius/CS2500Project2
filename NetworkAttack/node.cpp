@@ -1,5 +1,14 @@
 #include "node.h"
 #include "edge.h"
+Node::Node()
+{
+    m_id=0;
+    m_city="default";
+    m_state="default";
+    m_country="default";
+    m_latitude=0;
+    m_longitude=0;
+}
 
 Node::Node(const Node & rhs)
 {
