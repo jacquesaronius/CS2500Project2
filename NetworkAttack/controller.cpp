@@ -80,21 +80,25 @@ Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
     Node * v;
     int highest;
     int path_flow = 20;
+    int cnt1 = 0, cnt2 = 0, cnt3 = 0;
     for (v=t; v!=s; v=v->parent())
     {
         u = v->parent();
         if(u->outgoing().size()>=v->incoming().size())
         {
             highest=u->outgoing().size();
+            qDebug() << "cnt1:" << ++cnt1;
         }
         else
         {
             highest=v->incoming().size();
+            qDebug() << "cnt2:" << ++cnt1;
         }
         for(int i=0;i<highest; i++)
         {
             if(v->incoming()[i]->source()->id()==v->parent()->id())
             {
+                qDebug() << "cnt3:" << ++i;
                 Apath.add_edge(*(v->incoming()[i]));
             }
         }
@@ -316,8 +320,6 @@ void Controller::write_report(short modes)
 
     QFile file(file_name);
 
-    qDebug() << reports.size();
-
     if (file.open(QIODevice::WriteOnly))
     {
         QTextStream stream(& file);
@@ -358,6 +360,7 @@ void Controller::attack()
 void Controller::reset()
 {
     nodes = parser->nodes();
+    auto node = nodes[740];
     m_status = "Network reset.";
     update();
 }
@@ -371,7 +374,6 @@ void Controller::create()
         reports.push_back(r);
     }
 
-    qDebug() << reports.size();
     parser->import(m_kvalue);
     reset();
     m_status = "Network creeated.";

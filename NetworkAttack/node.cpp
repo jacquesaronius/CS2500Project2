@@ -1,5 +1,6 @@
 #include "node.h"
 #include "edge.h"
+#include <QDebug>
 
 Node::Node(const Node & rhs)
 {
