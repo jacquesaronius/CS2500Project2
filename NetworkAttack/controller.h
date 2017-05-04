@@ -33,8 +33,8 @@ class Controller : public QObject
     short m_kvalue = 50;
     short m_rounds = 0;
     short m_delay = 50;
-    short m_mode;
-    short m_attack_mode;
+    short m_mode = 0;
+    short m_attack_mode = 0;
     Node * m_source;
     Node * m_target;
     QString m_status;

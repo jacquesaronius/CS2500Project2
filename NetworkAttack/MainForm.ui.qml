@@ -205,11 +205,10 @@ Rectangle {
         }
     }
 
-
     Connections {
         target: tbAttack
         onClicked: {
-            controller.mode = sliderKValue.value;
+            controller.kvalue = sliderKValue.value;
             controller.attack();
         }
     }

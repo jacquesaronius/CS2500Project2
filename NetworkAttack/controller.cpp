@@ -14,12 +14,15 @@ int Controller::test_parser()
 
 int ** Controller::Calculategraph()
 {
-    int **graph=0;
+    int **graph;
     int k=0;
     graph = new int*[nodes.size()];
+    for(int r=0; r<nodes.size(); ++r)
+    {
+        graph[r]=new int[nodes.size()];
+    }
     for(auto i=nodes.begin(); i!=nodes.end(); i++)
     {
-        graph[k]=new int[nodes.size()];
         auto outgoing = i->outgoing();
         for(auto it=outgoing.begin(); it!=outgoing.end(); it++)
         {
@@ -37,18 +40,19 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 {
     Node* u;
     Node* v;
-    std::vector<Path> graphpaths;
-    int ** rGraph=0;
-
-    for (unsigned int i = 0; i < nodes.size(); i++)
+    int **rGraph;
+    rGraph = new int*[nodes.size()];
+    for (unsigned int i = 0; i < nodes.size(); ++i)
     {
-        graph[i]=new int[nodes.size()];
-        for (unsigned int k = 0; k < nodes.size(); k++)
+        rGraph[i]=new int[nodes.size()];
+    }
+    for(unsigned int r=0; r<nodes.size(); r++)
+    {
+         for (unsigned int k = 0; k < nodes.size(); k++)
         {
-             rGraph[i][k] = graph[i][k];
+              rGraph[r][k] = graph[r][k];
         }
     }
-
     int max_flow = 0;
 
     while(BFS(rGraph, s, t)==true)
@@ -312,7 +316,6 @@ int Controller::test_node_copy()
 void Controller::write_report(short modes)
 {
     auto t = time(NULL);
-    std::vector<QString> reports;
     QString mode_names[3]
     {
         "base_attack",
@@ -332,13 +335,14 @@ void Controller::write_report(short modes)
         "report_50_react_attack",
         "report_k_react_attack"
     };
-
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
             .arg(mode_names[m_mode])
             .arg(file_names[modes]);
 
     QFile file(file_name);
+
+    qDebug() << reports.size();
 
     if (file.open(QIODevice::WriteOnly))
     {
@@ -372,7 +376,6 @@ void Controller::attack()
     {
         QtConcurrent::run(this, &Controller::ReActiveRouting);
     }
-    update();
     //nodes = parser->nodes();
     //Node * s = &(nodes[nodes.size()-2]);
     //Node * t = &(nodes[nodes.size()-1]);
@@ -387,6 +390,14 @@ void Controller::reset()
 
 void Controller::create()
 {
+    reports.clear();
+    for (int j = 0; j < REPORT_K_REACT_ATTACK + 1; j++)
+    {
+        QString r;
+        reports.push_back(r);
+    }
+
+    qDebug() << reports.size();
     parser->import(m_kvalue);
     reset();
     m_status = "Network created.";

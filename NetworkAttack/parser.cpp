@@ -13562,10 +13562,12 @@ m_edges.push_back(e);
   );
 m_edges.push_back(e);
 int r1=0;
+std::vector<Node* > tempNodes;
 for(int i = 0; i< k; i++)
 {
     r1=rand() % m_nodes.size();
-    if(m_nodes[r1]->visited()==false)
+    if(m_nodes[r1]->visited()==false && m_nodes[r1] != m_nodes[m_nodes.size()-2] &&
+       m_nodes[r1] != m_nodes[m_nodes.size()-1])
     {
     m_nodes[r1]->visited(true);
     e=new Edge(
@@ -13574,6 +13576,7 @@ for(int i = 0; i< k; i++)
     20
     );
     m_edges.push_back(e);
+    tempNodes.push_back(m_nodes[r1]);
     }
     else
     {
@@ -13584,7 +13587,8 @@ int r2=0;
 for(int i = 0; i< k; i++)
 {
     r2=rand() % m_nodes.size();
-    if(m_nodes[r2]->visited()==false)
+    if(m_nodes[r2]->visited()==false && m_nodes[r2] != m_nodes[m_nodes.size()-1] &&
+       m_nodes[r2] != m_nodes[m_nodes.size()-2])
     {
     m_nodes[r2]->visited(true);
     e=new Edge(
@@ -13593,11 +13597,17 @@ for(int i = 0; i< k; i++)
     20
     );
     m_edges.push_back(e);
+    tempNodes.push_back(m_nodes[r2]);
     }
     else
     {
         i--;
     }
+}
+
+for(auto its = tempNodes.begin(); its != tempNodes.end(); its++)
+{
+    (*its)->visited(false);
 }
 
 for (auto it = m_edges.begin(); it != m_edges.end(); it++)
