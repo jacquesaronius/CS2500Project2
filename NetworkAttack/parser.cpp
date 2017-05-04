@@ -55,6 +55,7 @@ bool Parser::parse(const QString file_name)
 {
 
     const short NODE_MODE = 1;
+
     const bool EDGE_MODE = 2;
     short mode = 0;
     std::map<std::string, std::string> dictionary;
@@ -13561,11 +13562,12 @@ m_edges.push_back(e);
   );
 m_edges.push_back(e);
 int r1=0;
-for(int i = 0; i< k; k++)
+for(int i = 0; i< k; i++)
 {
     r1=rand() % m_nodes.size();
-    if(m_nodes[r1]->incoming()[m_nodes[r1]->incoming().size()]->source()!=m_nodes[m_nodes.size()-2])
+    if(m_nodes[r1]->visited()==false)
     {
+    m_nodes[r1]->visited(true);
     e=new Edge(
     m_nodes[m_nodes.size()-2],
     m_nodes[r1],
@@ -13575,15 +13577,16 @@ for(int i = 0; i< k; k++)
     }
     else
     {
-         k--;
+         i--;
     }
 }
 int r2=0;
-for(int i = 0; i< k; k++)
+for(int i = 0; i< k; i++)
 {
     r2=rand() % m_nodes.size();
-    if(m_nodes[r2]->outgoing()[m_nodes[r2]->outgoing().size()]->target()!=m_nodes[m_nodes.size()-1])
+    if(m_nodes[r2]->visited()==false)
     {
+    m_nodes[r2]->visited(true);
     e=new Edge(
     m_nodes[r2],
     m_nodes[m_nodes.size()-1],
@@ -13593,7 +13596,7 @@ for(int i = 0; i< k; k++)
     }
     else
     {
-        k--;
+        i--;
     }
 }
 
