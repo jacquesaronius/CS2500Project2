@@ -316,7 +316,6 @@ int Controller::test_node_copy()
 void Controller::write_report(short modes)
 {
     auto t = time(NULL);
-    std::vector<QString> reports;
     QString mode_names[3]
     {
         "base_attack",
@@ -336,7 +335,6 @@ void Controller::write_report(short modes)
         "report_50_react_attack",
         "report_k_react_attack"
     };
-    qDebug() << m_mode;
     QString file_name = QString("%1_%2_%3.csv")
             .arg(t)
             .arg(mode_names[m_mode])
@@ -378,7 +376,6 @@ void Controller::attack()
     {
         QtConcurrent::run(this, &Controller::ReActiveRouting);
     }
-    update();
     //nodes = parser->nodes();
     //Node * s = &(nodes[nodes.size()-2]);
     //Node * t = &(nodes[nodes.size()-1]);
