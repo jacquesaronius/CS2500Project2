@@ -55,10 +55,10 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
     }
     int max_flow = 0;
 
+    Path P;
     while(BFS(rGraph, s, t)==true)
     {
-
-        Path P=AugmentingPath(rGraph, s, t);
+        P=AugmentingPath(rGraph, s, t);
         addpath(P);
 
         for (v=t; v != s; v=v->parent())
@@ -76,37 +76,30 @@ int Controller::maxFlow(int **graph, Node* s, Node *t)
 Path Controller::AugmentingPath(int **graph, Node* s, Node* t)
 {
     Path Apath;
-    bool cancontinue;
     Node * u;
     Node * v;
+    int highest;
     int path_flow = 20;
     for (v=t; v!=s; v=v->parent())
     {
         u = v->parent();
+        if(u->outgoing().size()>=v->incoming().size())
+        {
+            highest=u->outgoing().size();
+        }
+        else
+        {
+            highest=v->incoming().size();
+        }
+        for(int i=0;i<highest; i++)
+        {
+            if(v->incoming()[i]->source()->id()==v->parent()->id())
+            {
+                Apath.add_edge(*(v->incoming()[i]));
+            }
+        }
         if(path_flow>graph[u->id()][v->id()])
             path_flow = graph[u->id()][v->id()];
-    }
-    v=t;
-    int i=0;
-    while(v!=s && cancontinue==true)
-    {
-        if(v!=s)
-        {
-          if(v->incoming()[i]->source()->id()==v->parent()->id())
-          {
-              Apath.add_edge(*(v->incoming()[i]));
-              v=v->parent();
-              i=0;
-          }
-          else
-          {
-              i++;
-          }
-        }
-        if(v==s)
-        {
-            cancontinue=false;
-        }
     }
     Apath.flow(path_flow);
     return Apath;
@@ -124,7 +117,7 @@ bool Controller::BFS(int **rgraph, Node* s, Node* t)
 
      while (!Q.empty())
      {
-         Node* u = Q.front();
+         Node* u = Q.back();
          Q.pop_back();
 
          for (unsigned int v=0; v < nodes.size(); v++)
@@ -182,9 +175,10 @@ Edge* Controller::static_attack()
 Edge* Controller::base_attack()
 {
     Path p;
+    int size = paths.size();
     std::vector<Edge> e;
     int k=0;
-    int i =rand() % static_cast<int>(paths.size());
+    int i =rand() % size;
     p = paths[i];
     e=p.edges();
     k = rand() % e.size();
